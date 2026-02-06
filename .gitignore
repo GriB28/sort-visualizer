@@ -1,5 +1,8 @@
 /.idea/
 /.venv/
 
+/cmake*/
+/.release/
+
 /__pycache__/
 /*/__pycache__/
