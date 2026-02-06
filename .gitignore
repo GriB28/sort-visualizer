@@ -2,6 +2,7 @@
 /.venv/
 
 /cmake*/
+/CMakeLists.txt
 /.release/
 
 /__pycache__/
