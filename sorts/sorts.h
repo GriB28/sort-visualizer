@@ -6,6 +6,8 @@ using std::size_t;
 
 namespace sorts {
     void bubble(int* list, const size_t &length);
+    void insertion(int* list, const size_t &length);
+    void selection(int* list, const size_t &length);
 }
 
 namespace utils {
