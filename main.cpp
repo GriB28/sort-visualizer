@@ -19,9 +19,10 @@ int main(const int argc, char* argv[]) {
     Utils utils(argv);
 
     cout << colors::YELLOW << "> Executing a sort algorithm...\n" << colors::RESET;
-    utils.start_sorting();
+    const bool executing_result = utils.do_sorting();
 
     cout << colors::LIGHT_YELLOW << "> Finished!\n" << colors::RESET
-    << colors::GREEN << utils.info() << colors::RESET << '\n';
-    return 0;
+    << (executing_result ? colors::GREEN : colors::RED) << utils.info() << colors::RESET << '\n';
+
+    return executing_result ? 0 : 1;
 }

@@ -15,11 +15,15 @@ public:
     bool check_for_input();
     [[nodiscard]] string info() const;
 
-    string start_sorting();
+    bool do_sorting();
 private:
     string input_file_name, output_file_name;
     string input_list, sort_name;
+
+    bool success_flag = false;
+
     bool checking_state = true;
+
     ofstream* output;
 };
 

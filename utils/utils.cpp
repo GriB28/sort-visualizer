@@ -1,6 +1,7 @@
-#include <fstream>
-
 #include "utils.h"
+
+#include <fstream>
+#include "../sorts/sorts.h"
 
 using std::ifstream;
 using std::getline;
@@ -51,12 +52,18 @@ bool Utils::check_for_input() {
 }
 
 string Utils::info() const {
-    return "Executed a(n) '" + sort_name + "' sorting algorithm.\n"
-    + "Results are stored in '" + output_file_name + "'.";
+    if (success_flag)
+        return "Executed a(n) '" + sort_name + "' sorting algorithm.\n"
+        + "Results are stored in '" + output_file_name + "'.";
+    return "Failed to execute a(n) '" + sort_name + "' sorting algorithm.\n"
+    + "It is currently unsupported.";
 }
 
-string Utils::start_sorting() {
-    if (!checking_state) return "bad_checking_state";
+bool Utils::do_sorting() {
+    if (!checking_state) {
+        success_flag = false;
+        return false;
+    }
 
     if (sort_name == "bubble") {
 
@@ -77,5 +84,6 @@ string Utils::start_sorting() {
 
     }
 
-    return output_file_name;
+    success_flag = true;
+    return true;
 }
