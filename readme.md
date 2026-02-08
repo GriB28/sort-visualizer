@@ -1,4 +1,4 @@
-<div style="text-align: center;">
+<div align="center" style="text-align: center;">
 
 # [Sort Visualizer](https://github.com/GriB28/sort-visualizer)
 ## Консольное приложение для визуализации работы алгоритмов сортировки
@@ -6,7 +6,7 @@
 </div><br><br>
 
 ### ☑️ Запуск и конфигурация
-<img src="/.readme/1.webp" width=200 style="float: left; margin-right: 25px;" alt="Launch and configuration">
+<img src="/.readme/1.webp" width=200 align="left" style="float: left; margin-right: 25px;" alt="Launch and configuration">
 
 - Windows 10+:
 
@@ -27,7 +27,7 @@
 
 #
 ### ⚙️ Компиляция бинарного файла сортировщика
-<img src="/.readme/2.webp" width=200 style="float: left; margin-right: 25px;" alt="Self-compiling a binary file">
+<img src="/.readme/2.webp" width=200 align="left" style="float: left; margin-right: 25px;" alt="Self-compiling a binary file">
 
 В конфигурационном файле [`CMakeLists.txt`](./CMakeLists.txt) содержится скрипт CMake4.0 для компиляции
 необходимого бинарного файла. Дополнительных действий делать не нужно.
