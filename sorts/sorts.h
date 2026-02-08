@@ -12,7 +12,7 @@ public:
     explicit Sorts(ofstream* link);
     ~Sorts() = default;
 
-    void load_list(int* array, const size_t &array_length);
+    void load_list(int** array, const size_t &array_length);
 
     void bubble() const;
     void insertion() const;

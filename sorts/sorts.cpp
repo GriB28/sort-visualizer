@@ -7,8 +7,8 @@ Sorts::Sorts(ofstream* link) {
     length = 0;
 }
 
-void Sorts::load_list(int* array, const size_t &array_length) {
-    list = array;
+void Sorts::load_list(int** array, const size_t &array_length) {
+    list = *array;
     length = array_length;
 }
 
