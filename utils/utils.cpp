@@ -1,9 +1,10 @@
-#include <fstream>
-
 #include "utils.h"
+
+#include <fstream>
 
 using std::ifstream;
 using std::getline;
+using std::stoi;
 
 
 Utils::Utils(char** console_args) {
@@ -14,6 +15,9 @@ Utils::Utils(char** console_args) {
      * выходной файл:
      * * последовательность изменений
      */
+
+    list = nullptr;
+    length = 0;
 
     input_file_name = string(console_args[1]);
     output_file_name = string(console_args[2]);
@@ -29,17 +33,46 @@ Utils::Utils(char** console_args) {
     output = new ofstream;
     output->open(output_file_name);
 
+    sorter = new Sorts(output);
+
     ifstream input(input_file_name);
     getline(input, input_list);
     getline(input, sort_name);
     input.close();
 
+    parse_input();
     check_for_input();
 }
 
 Utils::~Utils() {
     output->close();
     delete output;
+    delete sorter;
+}
+
+void Utils::parse_input() {
+    length = 0;
+    string buffer;
+
+    for (const char c : input_list) {
+        if (c == ' ') {
+            add_value(stoi(buffer));
+            buffer.clear();
+        }
+        else if ('0' <= c && c <= '9' || c == '-') {
+            buffer += c;
+        }
+    }
+    add_value(stoi(buffer));
+}
+void Utils::add_value(int value) {
+    const auto list_copy = new int[++length];
+    for (size_t i = 0; i < length - 1; i++)
+        list_copy[i] = list[i];
+    list_copy[length - 1] = value;
+
+    delete[] list;
+    list = list_copy;
 }
 
 bool Utils::check_for_input() {
@@ -51,31 +84,44 @@ bool Utils::check_for_input() {
 }
 
 string Utils::info() const {
-    return "Executed a(n) '" + sort_name + "' sorting algorithm.\n"
-    + "Results are stored in '" + output_file_name + "'.";
+    if (last_code == 0)
+        return "Executed a(n) '" + sort_name + "' sorting algorithm.\n"
+        + "Results are stored in '" + output_file_name + "'.";
+    if (last_code == 1)
+        return "Failed to execute a(n) '" + sort_name + "' sorting algorithm.\n"
+        + "It is currently unsupported.";
+    return "Failed to start executing a sorting algorithm.\nThe list of values was not provided.";
 }
 
-string Utils::start_sorting() {
-    if (!checking_state) return "bad_checking_state";
+void Utils::change_list(int** new_list) {
+    list = *new_list;
+}
 
-    if (sort_name == "bubble") {
-
+unsigned short Utils::do_sorting() {
+    if (!checking_state) {
+        last_code = 1;
+        return 1;
     }
-    else if (sort_name == "insertion") {
-
-    }
-    else if (sort_name == "selection") {
-
-    }
-    else if (sort_name == "merge") {
-
-    }
-    else if (sort_name == "heap") {
-
-    }
-    else { // quick
-
+    if (list == nullptr) {
+        last_code = 2;
+        return 2;
     }
 
-    return output_file_name;
+    sorter->load_list(&list, length);
+
+    if (sort_name == "bubble")
+        sorter->bubble();
+    else if (sort_name == "insertion")
+        sorter->insertion();
+    else if (sort_name == "selection")
+        sorter->selection();
+    else if (sort_name == "merge")
+        sorter->merge();
+    else if (sort_name == "heap")
+        sorter->heap();
+    else // quick
+        sorter->quick();
+
+    last_code = 0;
+    return 0;
 }

@@ -1,7 +1,25 @@
 #include "sorts.h"
 
 
-void sorts::bubble(int* list, const size_t &length) {
+Sorts::Sorts(ofstream* link) {
+    this->link = link;
+    list = nullptr;
+    length = 0;
+}
+
+void Sorts::load_list(int** array, const size_t &array_length) {
+    list = *array;
+    length = array_length;
+}
+
+void Sorts::save_snapshot() const {
+    for (size_t i = 0; i < length; i++)
+        *link << list[i] << ' ';
+    *link << '\n';
+}
+
+
+void Sorts::bubble() const {
     for (size_t i = 0; i < length - 1; i++) {
         bool breaker = true;
         for (size_t j = 0; j < length - i - 1; j++) {
@@ -10,13 +28,15 @@ void sorts::bubble(int* list, const size_t &length) {
                 const int t = list[j + 1];
                 list[j + 1] = list[j];
                 list[j] = t;
+
+                save_snapshot();
             }
         }
         if (breaker) break;
     }
 }
 
-void sorts::insertion(int* list, const size_t &length) {
+void Sorts::insertion() const {
     for (size_t i = 1; i < length; i++) {
         const int current_value = list[i];
         size_t j = i;
@@ -25,10 +45,12 @@ void sorts::insertion(int* list, const size_t &length) {
             j--;
         }
         list[j] = current_value;
+
+        save_snapshot();
     }
 }
 
-void sorts::selection(int* list, const size_t &length) {
+void Sorts::selection() const {
     for (size_t i = 0; i < length; i++) {
         int local_min = list[i];
         for (size_t j = i + 1; j < length; j++) {
@@ -39,10 +61,12 @@ void sorts::selection(int* list, const size_t &length) {
             }
         }
         list[i] = local_min;
+
+        save_snapshot();
     }
 }
 
-void sorts::do_merge(int* list, const size_t &left, const size_t &middle, const size_t &right) {
+void Sorts::do_merge(const size_t &left, const size_t &middle, const size_t &right) const {
     const size_t left_length = middle - left + 1, right_length = right - middle;
     const auto left_sublist = new int[left_length], right_sublist = new int[right_length];
 
@@ -56,29 +80,37 @@ void sorts::do_merge(int* list, const size_t &left, const size_t &middle, const 
     while (i < left_length && j < right_length) {
         if (left_sublist[i] <= right_sublist[j]) list[k++] = left_sublist[i++];
         else list[k++] = right_sublist[j++];
+
+        save_snapshot();
     }
 
-    while (i < left_length)
+    while (i < left_length) {
         list[k++] = left_sublist[i++];
-    while (j < right_length)
+
+        save_snapshot();
+    }
+    while (j < right_length) {
         list[k++] = right_sublist[j++];
+
+        save_snapshot();
+    }
 
     delete[] left_sublist;
     delete[] right_sublist;
 }
-void sorts::merge(int* list, const size_t &left, const size_t &right) {
+void Sorts::merge(const size_t &left, const size_t &right) {
     if (left < right) {
         const size_t middle = left + (right - left) / 2;
 
-        merge(list, left, middle);
-        merge(list, middle + 1, right);
+        merge(left, middle);
+        merge(middle + 1, right);
 
-        do_merge(list, left, middle, right);
+        do_merge(left, middle, right);
     }
 }
-void sorts::merge(int* list, const size_t &length) { merge(list, 0, length - 1); }
+void Sorts::merge() { merge(0, length - 1); }
 
-void sorts::quick(int* list, const size_t &low, const size_t &high) {
+void Sorts::quick(const size_t &low, const size_t &high) {
     if (low < high) {
         const int pivot = list[(low + high) / 2];
         size_t i = low - 1;
@@ -93,22 +125,24 @@ void sorts::quick(int* list, const size_t &low, const size_t &high) {
             const int t = list[j];
             list[j] = list[i];
             list[i] = t;
+
+            save_snapshot();
         }
 
-        quick(list, low, j);
-        quick(list, j + 1, high);
+        quick(low, j);
+        quick(j + 1, high);
     }
 }
-void sorts::quick(int* list, const size_t &length) { quick(list, 0, length - 1); }
+void Sorts::quick() { quick(0, length - 1); }
 
-void sorts::do_heap(int* list, const size_t &length, const size_t &index) {
+void Sorts::do_heap(const size_t &len, const size_t &index) {
     size_t max = index;
     const size_t left = 2 * index + 1;
     const size_t right = 2 * index + 2;
 
-    if (left < length && list[left] > list[max])
+    if (left < len && list[left] > list[max])
         max = left;
-    if (right < length && list[right] > list[max])
+    if (right < len && list[right] > list[max])
         max = right;
 
     if (max != index) {
@@ -116,17 +150,22 @@ void sorts::do_heap(int* list, const size_t &length, const size_t &index) {
         list[index] = list[max];
         list[max] = t;
 
-        do_heap(list, length, max);
+        save_snapshot();
+
+        do_heap(len, max);
     }
 }
-void sorts::heap(int* list, const size_t &length) {
+void Sorts::heap() {
     for (size_t i = length / 2; i > 0; i--)
-        do_heap(list, length, i - 1);
+        do_heap(length, i - 1);
 
     for (size_t i = length - 1; i > 0; i--) {
         const int t = list[0];
         list[0] = list[i];
         list[i] = t;
-        do_heap(list, i, 0);
+
+        save_snapshot();
+
+        do_heap(i, 0);
     }
 }
