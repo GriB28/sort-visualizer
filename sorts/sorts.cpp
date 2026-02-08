@@ -15,6 +15,7 @@ void Sorts::load_list(int** array, const size_t &array_length) {
 void Sorts::save_snapshot() const {
     for (size_t i = 0; i < length; i++)
         *link << list[i] << ' ';
+    *link << '\n';
 }
 
 
