@@ -4,6 +4,7 @@
 #include <cstddef>
 using std::size_t;
 
+
 namespace sorts {
     void bubble(int* list, const size_t &length);
     void insertion(int* list, const size_t &length);
@@ -19,10 +20,6 @@ namespace sorts {
 
     void heap(int* list, const size_t &length);
     void do_heap(int* list, const size_t &length, const size_t &index);
-}
-
-namespace utils {
-
 }
 
 #endif
