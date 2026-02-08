@@ -21,8 +21,4 @@ namespace sorts {
     void do_heap(int* list, const size_t &length, const size_t &index);
 }
 
-namespace utils {
-
-}
-
 #endif
