@@ -3,28 +3,27 @@
 # [Sort Visualizer](https://github.com/GriB28/sort-visualizer)
 ## Консольное приложение для визуализации работы алгоритмов сортировки
 
-</div>
+</div><br><br>
 
-#
 ### ☑️ Запуск и конфигурация
 <img src="/.readme/1.webp" width=200 style="float: left; margin-right: 25px;" alt="Launch and configuration">
 
 - Windows 10+:
 
-  Установка необходимых библиотек: `python -m pip install -r requirements.txt`
+  * Установка необходимых библиотек: `python -m pip install -r requirements.txt`
 
-  Запуск приложения: `python main.py`
+  * Запуск приложения: `python main.py`
 
 
 - Linux:
 
-  Создание виртуального окружения: `python3 -m venv ./.venv`
+  * Создание виртуального окружения: `python3 -m venv ./.venv`
 
-  И его активация: `source ./.venv/bin/activate`
+  * И его активация: `source ./.venv/bin/activate`
 
-  Установка необходимых библиотек: `python3 -m pip install -r requirements.txt`
+  * Установка необходимых библиотек: `python3 -m pip install -r requirements.txt`
 
-  Запуск приложения: `python3 main.py`
+  * Запуск приложения: `python3 main.py`
 
 #
 ### ⚙️ Компиляция бинарного файла сортировщика
