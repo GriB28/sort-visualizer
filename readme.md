@@ -6,7 +6,11 @@
 </div><br><br>
 
 ### ☑️ Запуск и конфигурация
-<img src="/.readme/1.webp" width=200 style="float: left; margin-right: 25px;" alt="Launch and configuration">
+<img src="/.readme/1.webp" width=70 align="left" style="float: left; margin-right: 25px;" alt="Launch and configuration">
+
+Инструкции по установке и настройке.
+
+Приложение адаптировано под ОС Windows и Linux.
 
 - Windows 10+:
 
@@ -27,7 +31,7 @@
 
 #
 ### ⚙️ Компиляция бинарного файла сортировщика
-<img src="/.readme/2.webp" width=200 style="float: left; margin-right: 25px;" alt="Self-compiling a binary file">
+<img src="/.readme/2.webp" width=70 align="left" style="float: left; margin-right: 25px;" alt="Self-compiling a binary file">
 
 В конфигурационном файле [`CMakeLists.txt`](./CMakeLists.txt) содержится скрипт CMake4.0 для компиляции
 необходимого бинарного файла. Дополнительных действий делать не нужно.
@@ -37,7 +41,9 @@
 
 #
 ## Создатели
-@GriB28, @EichhorniaCrassipes, @ArsenyKenunen
+[@GriB28](https://github.com/GriB28),
+[@EichhorniaCrassipes](https://github.com/EichhorniaCrassipes),
+[@ArsenyKenunen](https://github.com/ArsenyKenunen)
 
 [![Contributors](https://contrib.rocks/image?repo=GriB28%2Fsort-visualizer)](https://github.com/GriB28/sort-visualizer/graphs/contributors)
 
