@@ -37,9 +37,7 @@
 
 #
 ## Создатели
-[`GriB28`](https://github.com/GriB28),
-[`EichhorniaCrassipes`](https://github.com/EichhorniaCrassipes),
-[`ArsenyKenunen`](https://github.com/ArsenyKenunen)
+@GriB28, @EichhorniaCrassipes, @ArsenyKenunen
 
 [![Contributors](https://contrib.rocks/image?repo=GriB28%2Fsort-visualizer)](https://github.com/GriB28/sort-visualizer/graphs/contributors)
 
