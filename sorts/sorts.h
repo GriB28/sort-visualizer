@@ -33,6 +33,8 @@ private:
     void do_heap(const size_t &len, const size_t &index);
 
     void save_snapshot() const;
+    void save_check(size_t index_1, size_t index_2) const;
+    void save_swap() const;
 
     ofstream* link;
 };
