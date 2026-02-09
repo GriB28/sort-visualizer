@@ -27,7 +27,6 @@ void Sorts::save_check(const size_t index_1, const size_t index_2) const {
 }
 void Sorts::save_swap() const {
     *link << "swap\n";
-    save_snapshot();
 }
 
 
@@ -52,7 +51,6 @@ void Sorts::bubble() const {
 }
 
 void Sorts::insertion() const {
-    save_snapshot();
     for (size_t i = 1; i < length; i++) {
         const int current_value = list[i];
         size_t j = i;
