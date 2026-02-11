@@ -57,18 +57,17 @@ void Sorts::insertion() const {
 
         save_check(i, j - 1);
 
-        while (j > 0 && list[j - 1] > current_value) {
-            list[j] = list[j - 1];
-
+        while (j > 0) {
             save_check(j, j - 1);
-            save_swap();
 
-            j--;
+            if (list[j - 1] > current_value) {
+                list[j] = list[j - 1];
+                j--;
+
+                save_swap();
+            }
+            else break;
         }
-
-        save_check(j, i);
-        save_swap();
-
         list[j] = current_value;
     }
 }
