@@ -26,7 +26,7 @@ void Sorts::save_check(const size_t index_1, const size_t index_2) const {
     *link << min(index_1, index_2) << ' ' << max(index_1, index_2) << '\n';
 }
 void Sorts::save_swap() const {
-    *link << "swap\n";
+    *link << "s\n";
 }
 
 
