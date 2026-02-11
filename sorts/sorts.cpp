@@ -2,6 +2,8 @@
 
 #include "sorts.h"
 
+#include <iostream>
+
 using std::min;
 using std::max;
 
@@ -73,26 +75,25 @@ void Sorts::insertion() const {
 }
 
 void Sorts::selection() const {
-    for (size_t i = 0; i < length; i++) {
-        int local_min = list[i];
+    for (size_t i = 0; i < length - 1; i++) {
         size_t local_min_index = i;
-        for (size_t j = i + 1; j < length; j++) {
 
+        for (size_t j = i + 1; j < length; j++) {
             save_check(local_min_index, j);
 
-            if (local_min > list[j]) {
-                const int t = list[j];
-                list[j] = local_min;
-                local_min = t;
-
-                save_swap();
+            if (list[j] < list[local_min_index])
                 local_min_index = j;
-            }
         }
-        list[i] = local_min;
 
-        save_check(i, local_min_index);
-        save_swap();
+        if (local_min_index != i) {
+            save_check(i, local_min_index);
+
+            const int t = list[i];
+            list[i] = list[local_min_index];
+            list[local_min_index] = t;
+
+            save_swap();
+        }
     }
 }
 
