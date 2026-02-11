@@ -18,8 +18,7 @@ public:
     void insertion() const;
     void selection() const;
 
-    void merge();
-    void merge(const size_t &left, const size_t &right);
+    void merge() const;
 
     void quick();
     void quick(const size_t &low, const size_t &high);
@@ -29,7 +28,7 @@ private:
     int* list;
     size_t length;
 
-    void do_merge(const size_t &left, const size_t &middle, const size_t &right) const;
+    void do_merge(const size_t &left, size_t middle, const size_t &right) const;
     void do_heap(const size_t &len, const size_t &index);
 
     void save_snapshot() const;

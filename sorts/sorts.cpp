@@ -97,60 +97,44 @@ void Sorts::selection() const {
     }
 }
 
-void Sorts::do_merge(const size_t &left, const size_t &middle, const size_t &right) const {
-    const size_t left_length = middle - left + 1, right_length = right - middle;
-    const auto left_sublist = new int[left_length], right_sublist = new int[right_length];
+void Sorts::do_merge(const size_t &left, size_t middle, const size_t &right) const {
+    size_t i = left;
+    size_t j = middle + 1;
 
-    for (size_t i = 0; i < left_length; i++)
-        left_sublist[i] = list[left + i];
-    for (size_t i = 0; i < right_length; i++)
-        right_sublist[i] = list[middle + 1 + i];
+    while (i <= middle && j <= right) {
+        save_check(i, j);
 
-    size_t i = 0, j = 0, k = left;
-
-    while (i < left_length && j < right_length) {
-        save_check(left + i, middle + 1 + j);
-        if (left_sublist[i] <= right_sublist[j]) {
-            save_check(left + i, k);
-            save_swap();
-
-            list[k++] = left_sublist[i++];
-        }
+        if (list[i] <= list[j])
+            i++;
         else {
-            save_check(k, middle + 1 + j);
-            save_swap();
+            size_t index = j;
 
-            list[k++] = right_sublist[j++];
+            while (index > i) {
+                save_check(index - 1, index);
+
+                const int t = list[index];
+                list[index] = list[index - 1];
+                list[index - 1] = t;
+
+                save_swap();
+                index--;
+            }
+
+            i++;
+            j++;
+            middle++;
         }
     }
-
-    while (i < left_length) {
-        save_check(k, left + i);
-        save_swap();
-
-        list[k++] = left_sublist[i++];
-    }
-    while (j < right_length) {
-        save_check(k, middle + 1 + j);
-        save_swap();
-
-        list[k++] = right_sublist[j++];
-    }
-
-    delete[] left_sublist;
-    delete[] right_sublist;
 }
-void Sorts::merge(const size_t &left, const size_t &right) {
-    if (left < right) {
-        const size_t middle = left + (right - left) / 2;
-
-        merge(left, middle);
-        merge(middle + 1, right);
-
-        do_merge(left, middle, right);
-    }
+void Sorts::merge() const {
+    for (size_t current_size = 1; current_size < length; current_size *= 2)
+        for (size_t left = 0; left < length - 1; left += 2 * current_size) {
+            const size_t middle = std::min(left + current_size - 1, length - 1),
+                         right = std::min(left + 2 * current_size - 1, length - 1);
+            if (middle < right)
+                do_merge(left, middle, right);
+        }
 }
-void Sorts::merge() { merge(0, length - 1); }
 
 void Sorts::quick(const size_t &low, const size_t &high) {
     if (low < high) {
