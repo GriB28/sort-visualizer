@@ -1,10 +1,13 @@
 #include "utils.h"
 
 #include <fstream>
+#include <iostream>
 
 using std::ifstream;
 using std::getline;
 using std::stoi;
+using std::cerr;
+using std::runtime_error;
 
 
 Utils::Utils(char** console_args) {
@@ -32,6 +35,10 @@ Utils::Utils(char** console_args) {
 
     output = new ofstream;
     output->open(output_file_name);
+    if (!output->is_open()) {
+        cerr << "Failed to open output file '" << output_file_name << "'.\n";
+        throw runtime_error("Failed to open output file.");
+    }
 
     sorter = new Sorts(output);
 
@@ -48,6 +55,8 @@ Utils::~Utils() {
     output->close();
     delete output;
     delete sorter;
+
+    delete[] list;
 }
 
 void Utils::parse_input() {
@@ -55,7 +64,7 @@ void Utils::parse_input() {
     string buffer;
 
     for (const char c : input_list) {
-        if (c == ' ') {
+        if (c == ' ' && !buffer.empty()) {
             add_value(stoi(buffer));
             buffer.clear();
         }
@@ -65,7 +74,7 @@ void Utils::parse_input() {
     }
     add_value(stoi(buffer));
 }
-void Utils::add_value(int value) {
+void Utils::add_value(const int value) {
     const auto list_copy = new int[++length];
     for (size_t i = 0; i < length - 1; i++)
         list_copy[i] = list[i];
