@@ -72,7 +72,8 @@ void Utils::parse_input() {
             buffer += c;
         }
     }
-    add_value(stoi(buffer));
+    if (!buffer.empty())
+        add_value(stoi(buffer));
 }
 void Utils::add_value(const int value) {
     const auto list_copy = new int[++length];
