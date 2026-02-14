@@ -1,8 +1,9 @@
-/.idea/
-/.venv/
-/.vscode/
-
-/cmake*/
-
-/__pycache__/
-/*/__pycache__/
+build/
+bin/
+*.exe
+*.pdb
+*.txt
+*.mp4
+videos/
+__pycache__/
+.venv/
