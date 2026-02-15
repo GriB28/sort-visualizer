@@ -136,7 +136,7 @@ void Sorts::merge() const {
         }
 }
 
-void Sorts::quick(const size_t &low, const size_t &high) {
+void Sorts::do_quick(const size_t &low, const size_t &high) {
     if (low < high) {
         const int pivot = list[(low + high) / 2];
         size_t i = low - 1;
@@ -162,11 +162,11 @@ void Sorts::quick(const size_t &low, const size_t &high) {
             list[i] = t;
         }
 
-        quick(low, j);
-        quick(j + 1, high);
+        do_quick(low, j);
+        do_quick(j + 1, high);
     }
 }
-void Sorts::quick() { quick(0, length - 1); }
+void Sorts::quick() { do_quick(0, length - 1); }
 
 void Sorts::do_heap(const size_t &len, const size_t &index) {
     size_t max = index;
