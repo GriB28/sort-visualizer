@@ -21,7 +21,6 @@ public:
     void merge() const;
 
     void quick();
-    void quick(const size_t &low, const size_t &high);
 
     void heap();
 private:
@@ -30,6 +29,7 @@ private:
 
     void do_merge(const size_t &left, size_t middle, const size_t &right) const;
     void do_heap(const size_t &len, const size_t &index);
+    void do_quick(const size_t &low, const size_t &high);
 
     void save_snapshot() const;
     void save_check(size_t index_1, size_t index_2) const;
