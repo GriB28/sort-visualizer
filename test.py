@@ -9,16 +9,19 @@ framerate = 60
 algos = ['bubble', 'heap', 'merge', 'selection', 'insertion', 'quick']
 
 def draw_rectangle(frame, index, value, color, array_size, max_val):
-    bar_width = width // array_size
-    bar_height = int((value / max_val) * (height - 50))
-    x = index * bar_width
-    cv2.rectangle(frame, (x, height), (x + bar_width - 2, height - bar_height), color, -1)
+    gap = 10
+    bar_width = (width - gap*2) // array_size
+    bar_height = int((value / max_val) * (height - gap*2))
+    x = index * bar_width + gap
+    cv2.rectangle(frame, (x, height - gap), (x + bar_width - 2, height - bar_height - gap), color, -1)
 
-def draw_frame(video, arr, highlight=False, idx1=None, idx2=None):
+def draw_frame(video, arr, text, highlight=False, idx1=None, idx2=None):
     frame = np.zeros((height, width, 3), dtype=np.uint8)
     array_size = len(arr)
     max_val = max(arr) if array_size > 0 else 1
 
+    (text_width, text_height), baseline = cv2.getTextSize(text, cv2.FONT_HERSHEY_SIMPLEX, 0.7, 2)
+    cv2.putText(frame, text, (0, text_height), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 255))
     for i in range(array_size):
         draw_rectangle(frame, i, arr[i], (255, 255, 255), array_size, max_val)
 
@@ -51,27 +54,30 @@ def run_visualization():
         video = cv2.VideoWriter(output_name, fourcc, framerate, (width, height))
 
         print(f"Visualisation started for {algo}, with {len(arr)} elements...")
-
         try:
             with open(current_log, 'r') as f:
                 a, b = 0, 0
+                swaps = 0
+                compares = 0
                 for line in f:
                     line = line.strip()
                     if not line:
                         continue
-
+                    text = f"{algo} sort with {len(arr)} elements, swaps:{swaps}, compares:{compares}"
                     if line == 's':
                         if a < len(arr) and b < len(arr):
                             arr[a], arr[b] = arr[b], arr[a]
-                            draw_frame(video, arr, True, a, b)
+                            draw_frame(video, arr, text, True, a, b)
+                        swaps += 1
                     else:
                         parts = line.split()
                         if len(parts) == 2:
                             a, b = int(parts[0]), int(parts[1])
-                            draw_frame(video, arr, True, a, b)
+                            draw_frame(video, arr, text, True, a, b)
+                            compares += 1
 
             for _ in range(framerate):
-                draw_frame(video, arr, False)
+                draw_frame(video, arr, text, False)
 
             print(f"Finished {algo}! Result saved in {output_name}")
         except Exception as e:
