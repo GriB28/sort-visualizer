@@ -1,10 +1,12 @@
 import random
 import os
 
-SIZE = int(input(">>> Введите размер массива для сортировки: "))
+from sys import argv
+
+SIZE = int(argv[1])
 FOLDER = "arrays"
 
-current_algo = input(">>> Введите название сортировки для расчёта или `all` для всех: ").strip().lower()
+current_algo = argv[2].strip().lower()
 algos = ["quick", "bubble", "selection", "insertion", "heap", "merge"]
 
 if current_algo not in algos and current_algo != 'all':

@@ -7,6 +7,23 @@ YELLOW='\033[0;33m'
 CYAN='\033[0;36m'
 GREY='\e[90m'
 
+algos=("bubble" "heap" "merge" "selection" "insertion" "quick")
+
+start_binary() {  # 1 -- sort_name; 2 -- way
+    input_file="./arrays/input_$1.txt"
+    log_file="$1.txt"
+
+    if [ -f "$2" ]; then
+        echo -e "\n$GREYОбработка: $1...$NC"
+        sleep 1
+        "$2" "$input_file" "$log_file"
+    else
+        echo -e "[!] $RED Не найден файл бинарника по пути: $2$NC"
+        echo -e " >  $RED Попробуйте запустить скрипт сборщика повторно либо собрать проект вручную$NC"
+        exit 1
+    fi
+}
+
 
 echo -e "Запускаю сборщик визуализатора сортировок..."
 echo -e "$CYANПодготавливаю проект к запуску...$NC\n"
@@ -39,8 +56,23 @@ echo -e "$GREENСборка завершена!$NC\n\n"
 echo -e "$YELLOWОжидаю параметры для генерации входных массивов:$NC\n"
 mkdir -p ./arrays
 
+read -rp ">>> Введите размер массива для сортировки: " length
+read -rp ">>> Введите название сортировки для расчёта или \`all\` для всех: " algorithm
+
+correct_algo_name=false
+for item in "${algos[@]}"; do
+    if [[ "$item" == "$algorithm" ]]; then
+        correct_algo_name=true
+        break
+    fi
+done
+if [ "$correct_algo_name" = false ] && [ "$algorithm" != "all" ]; then
+    echo "Фигню написал, делаю all!"
+    algorithm="all"
+fi
+
 if [ -f "generate.py" ]; then
-    python3 generate.py
+    python3 generate.py $length $algorithm
 else
     echo -e "[!] $REDНе найден файл генерации (generate.py)$NC"
     exit 1
@@ -48,24 +80,16 @@ fi
 
 echo -e "$YELLOWЗапускаю сортировки!$NC"
 sleep 2
-algos=("bubble" "heap" "merge" "selection" "insertion" "quick")
 
 way="./bin/sort_visualizer"
 
-for algo in "${algos[@]}"; do
-    input_file="./arrays/input_${algo}.txt"
-    log_file="${algo}.txt"
-    
-    if [ -f "$way" ]; then
-        echo -e "\n$GREYОбработка: ${algo}...$NC"
-        sleep 1
-        $way "$input_file" "$log_file"
-    else
-        echo "[!] $RED Не найден файл бинарника по пути: $way$NC"
-        echo " >  $RED Попробуйте запустить скрипт сборщика повторно либо собрать проект вручную$NC"
-        exit 1
-    fi
-done
+if [ "$algorithm" == "all" ]; then
+    for algo in "${algos[@]}"; do
+        start_binary $algo $way
+    done
+else
+    start_binary $algorithm $way
+fi
 
 echo -e "\n\n\n$CYANНачинаю генерировать видео$NC"
 sleep 2
