@@ -2,18 +2,18 @@ import cv2
 import numpy as np
 import os
 
-width = 1000
-height = 500
-framerate = 60
+width = 1920
+height = 1080
+framerate = 600
 
 algos = ['bubble', 'heap', 'merge', 'selection', 'insertion', 'quick']
 
 def draw_rectangle(frame, index, value, color, array_size, max_val):
     gap = 10
-    bar_width = (width - gap*2) // array_size
+    bar_width = (width - gap*2) / array_size
     bar_height = int((value / max_val) * (height - gap*2))
-    x = index * bar_width + gap
-    cv2.rectangle(frame, (x, height - gap), (x + bar_width - 2, height - bar_height - gap), color, -1)
+    x = int(index * bar_width + gap)
+    cv2.rectangle(frame, (x, height - gap), (x + int(bar_width) - 1, height - bar_height - gap), color, -1)
 
 def draw_frame(video, arr, text, highlight=False, idx1=None, idx2=None):
     frame = np.zeros((height, width, 3), dtype=np.uint8)
