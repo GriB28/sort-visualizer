@@ -1,7 +1,14 @@
-/.idea/
 /.venv/
+/.idea/
 
-/cmake*/
+/*build*/
+/bin/
+/videos/
 
 /__pycache__/
 /*/__pycache__/
+
+*.exe
+*.pdb
+*.txt
+*.mp4
