@@ -5,7 +5,8 @@
 
 </div>
 
-#
+<br><br>
+
 ### ℹ️ Описание функционала
 
 <img src="/.readme/3.webp" width=80 align="left" style="float: left; margin-right: 8px;" alt="Main menu commands">
@@ -84,6 +85,7 @@ _Как запустить и программу и работать с ней?_
 В конфигурационном файле [`CMakeLists.txt`](./CMakeLists.txt) содержится скрипт CMake3.28 для компиляции
 необходимого бинарного файла. Дополнительных действий делать не нужно.
 
+<br><br>
 
 #
 ## Создатели
