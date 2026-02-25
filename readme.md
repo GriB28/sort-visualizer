@@ -70,7 +70,7 @@ _Как запустить и программу и работать с ней?_
 
 - Windows 10+ (WSL) и Linux:
 
-  * (!) Для запуска программы на ОС Windows необходимо заранее установить Windows Subsystem for Linux (WSL)
+  * (!) Для запуска программы на ОС Windows необходимо заранее установить Windows Subsystem for Linux (WSL). Как это сделать: [инструкция](https://learn.microsoft.com/ru-ru/windows/wsl/install);
 
   * Должны быть установлены необходимые пакеты: `g++`(если не установлен), `python3`(если не установлен), `cmake`, `dos2unix`, `python3-venv`
 
