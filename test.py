@@ -6,6 +6,7 @@ width = 1920
 height = 1080
 framerate = 600
 
+
 algos = ['bubble', 'heap', 'merge', 'selection', 'insertion', 'quick']
 
 def draw_rectangle(frame, index, value, color, array_size, max_val):
