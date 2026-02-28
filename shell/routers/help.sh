@@ -7,10 +7,10 @@ E='\033[0m'
 R='\033[0;31m'
 err="${R}[!]${E} "
 
-commands=("help" "build" "clear")
+commands=("help" "build" "reset")
 help=("--page <uint>")
-build=("--cmake <bool>" "--venv <bool>")
-clear=("--hard <bool>")
+build=("--cmake <bool>[def. true]" "--venv <bool>[def. true]")
+reset=("--hard <bool>")
 
 
 function print() {  # 1 -- номер страницы для просмотра (0 = все)
