@@ -10,7 +10,7 @@ err="${R}[!]${E} "
 commands=("help" "build" "reset")
 help=("--page <uint>")
 build=("--cmake <bool>[def. true]" "--venv <bool>[def. true]")
-reset=("--hard <bool>")
+reset=("--cmake <bool>[def. true]" "--venv <bool>[def. true]" "--temp <bool>[def. true]")
 
 
 function print() {  # 1 -- номер страницы для просмотра (0 = все)
