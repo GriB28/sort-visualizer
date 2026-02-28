@@ -30,26 +30,23 @@ function print() {  # 1 -- номер страницы для просмотра
     done
 }
 
-
-if [ "$#" -eq 0 ]; then
-    echo -e "$YСтраница помощи\n$G> Список доступных команд:$E"
-    print 0
-else
-    breaker=0
-    while [ "$#" -gt 1 ]; do
-        if [ "$1" == "--page" ]; then
-            if [[ $2 =~ ^[0-9]+$ ]]; then
-                breaker=$2
-            else
-                breaker=-1
-                echo -e "$errАргумент не может быть распознан!"
-            fi
-            break
+page=0
+while [ "$#" -gt 1 ]; do
+    if [ "$1" == "--page" ]; then
+        if [[ $2 =~ ^[0-9]+$ ]]; then
+            page=$2
+        else
+            page=-1
+            echo -e "$errАргумент не может быть распознан!"
         fi
-        shift
-    done
-
-    if [ "$breaker" -ne -1 ]; then
-        print "$breaker"
+        break
     fi
+    shift
+done
+
+if [ "$page" -ne -1 ]; then
+    if [ "$page" -eq 0 ]; then
+        echo -e "$YСтраница помощи\n$G> Список доступных команд:$E"
+    fi
+    print "$page"
 fi
