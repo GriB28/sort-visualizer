@@ -6,7 +6,7 @@ E='\033[0m'
 algorithms=("bubble" "heap" "merge" "selection" "insertion" "quick")
 
 
-echo -e "$SОчищаю временные файлы и папки$E"
+echo -e "$SОчищаем временные файлы и папки$E"
 rm -rf ./arrays
 echo -e "$S> директория 'arrays' удалена"
 for alg_name in "${algorithms[@]}"; do
