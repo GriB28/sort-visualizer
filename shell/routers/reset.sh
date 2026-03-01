@@ -26,7 +26,7 @@ venv=true
 temp=true
 while [ "$#" -gt 1 ]; do
     case "$1" in
-        "--cmake" )
+        --cmake)
             if [ "$2" = "false" ] || [ "$2" -eq 0 ]; then
                 cmake=false
             else
@@ -34,7 +34,7 @@ while [ "$#" -gt 1 ]; do
             fi
             shift
             ;;
-        "--venv" )
+        --venv)
             if [ "$2" = "false" ] || [ "$2" -eq 0 ]; then
                 venv=false
             else
@@ -42,7 +42,7 @@ while [ "$#" -gt 1 ]; do
             fi
             shift
             ;;
-        "--temp" )
+        --temp)
             if [ "$2" = "false" ] || [ "$2" -eq 0 ]; then
                 temp=false
             else
