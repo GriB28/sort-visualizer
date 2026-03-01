@@ -1,11 +1,11 @@
 import cv2
 import numpy as np
 import os
+from sys import argv
 
-width = 1920
-height = 1080
-framerate = 600
-
+width = int(argv[1])
+height = int(argv[2])
+framerate = int(argv[3])
 
 algos = ['bubble', 'heap', 'merge', 'selection', 'insertion', 'quick']
 
