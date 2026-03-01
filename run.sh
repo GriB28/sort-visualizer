@@ -7,6 +7,11 @@ YELLOW='\033[0;33m'
 CYAN='\033[0;36m'
 GREY='\e[90m'
 
+# переменные с разрешением и фреймрейтом (перенесены из питон-скрипта)
+WIDTH=1920
+HEIGHT=1080
+FRAMERATE=600
+
 algos=("bubble" "heap" "merge" "selection" "insertion" "quick")
 
 start_binary() {  # 1 -- sort_name; 2 -- way
@@ -91,10 +96,15 @@ else
     start_binary $algorithm $way
 fi
 
+# тут расчитываем фпс, заранее спрашиваем у юзера время, которое ему нужно и затем меняем фреймрейт в зависимости от размера массива
+echo -e "\n\n\n"
+read -rp ">>> Введите требуемую длину видео (в секундах): " len_time
+
+
 echo -e "\n\n\n$CYANНачинаю генерировать видео$NC"
 sleep 2
 if [ -f "test.py" ]; then
-    python3 test.py
+    python3 test.py $WIDTH $HEIGHT $FRAMERATE
 else
     echo -e "[!] $REDНе найден файл test.py$NC"
     exit 1
