@@ -20,8 +20,8 @@ function do_render() {  # 1 -- video width; 2 -- video height; 3 -- video length
 }
 
 length=0
-width=0
-height=0
+width=1920
+height=1080
 while [ "$#" -gt 1 ]; do
     case "$1" in
         --length)
@@ -52,4 +52,8 @@ while [ "$#" -gt 1 ]; do
     shift
 done
 
-do_render "$width" "$height" "$length"
+if [ "$length" -eq 0 ]; then
+    echo -e "$errПараметр по ключу length не был передан в роутер!"
+else
+    do_render "$width" "$height" "$length"
+fi
