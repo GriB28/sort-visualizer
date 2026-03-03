@@ -11,6 +11,7 @@ err="\033[0;31m[!]${E} "
 function help() {
     echo -e "$GREY"
     read -rp "Номер страницы (по умолчанию: все): " page
+    echo -e "$E"
     if [ -z "$page" ]; then
         ./shell/routers/help.sh
     else
@@ -25,8 +26,9 @@ function main() {
     read -rp "Длина видео (в секундах): " video_length
     echo -e "$CYAN"
     read -rp "Название сортировки: " name
+    echo -e "$E"
 
-    ./shell/routers/main --array_length "$array_length" --video_length "$video_length" --name "$name"
+    ./shell/routers/main.sh --array_length "$array_length" --video_length "$video_length" --name "$name"
 }
 
 function reset() {
@@ -84,6 +86,8 @@ function reset() {
         esac
     done
 
+    echo -e "$E"
+
     ./shell/routers/reset.sh --cmake $cmake --venv $venv --temp $temp
 }
 
@@ -92,6 +96,7 @@ function generate() {
     read -rp "Название сортировки: " name
     echo -e "$CYAN"
     read -rp "Размер массива для сортировки: " length
+    echo -e "$E"
 
     ./shell/routers/generate.sh --name "$name" --length "$length"
 }
@@ -101,6 +106,7 @@ function sort() {
     read -rp "Файл с конфигурацией: " input
     echo -e "$CYAN"
     read -rp "Имя выходного файла: " output
+    echo -e "$E"
 
     ./shell/routers/sort.sh --input "$input" --output "$output"
 }
@@ -123,14 +129,16 @@ function render() {
         height=1080
     fi
 
+    echo -e "$E"
+
     ./shell/routers/render.sh --file "$file" --fps "$fps" --width "$width" --height "$height"
 }
 
 
 while true; do
-    echo -e "$GREEN"
+    echo -e "\n$GREEN"
     read -rp ">>> " command
-    case $command in
+    case "$command" in
         exit)
             break
             ;;
