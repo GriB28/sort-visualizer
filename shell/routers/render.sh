@@ -3,16 +3,16 @@
 err="\033[0;31m[!]\033[0m "
 
 
-length=0
+time=0
 width=1920
 height=1080
 while [ "$#" -gt 1 ]; do
     case "$1" in
-        --length)
+        --time)
             if [[ $2 =~ ^[0-9]+$ ]]; then
-                length="$2"
+                time="$2"
             else
-                echo -e "$errАргумент ключа length не может быть распознан!"
+                echo -e "$errАргумент ключа time не может быть распознан!"
             fi
             shift
             ;;
@@ -36,8 +36,8 @@ while [ "$#" -gt 1 ]; do
     shift
 done
 
-if [ "$length" -eq 0 ]; then
-    echo -e "$errПараметр по ключу length не был передан в роутер!"
+if [ "$time" -eq 0 ]; then
+    echo -e "$errПараметр по ключу time не был передан в роутер!"
 else
-    ./shell/source/render.sh "$width" "$height" "$length"
+    ./shell/source/render.sh "$width" "$height" "$time"
 fi
