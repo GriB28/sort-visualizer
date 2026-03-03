@@ -4,15 +4,24 @@ err="\033[0;31m[!]\033[0m "
 
 
 fps=0
+file=""
 width=1920
 height=1080
 while [ "$#" -gt 1 ]; do
     case "$1" in
-        --time)
+        --fps)
             if [[ $2 =~ ^[0-9]+$ ]]; then
                 fps="$2"
             else
                 echo -e "$errАргумент ключа fps не может быть распознан!"
+            fi
+            shift
+            ;;
+        --file)
+            if [ -f "$2" ]; then
+                file=$2
+            else
+                echo -e "$errАргумент ключа file не может быть найден на диске!"
             fi
             shift
             ;;
@@ -36,8 +45,8 @@ while [ "$#" -gt 1 ]; do
     shift
 done
 
-if [ "$fps" -eq 0 ]; then
-    echo -e "$errПараметр по ключу fps не был передан в роутер!"
+if [ "$fps" -eq 0 ] || [ "$file" -eq "" ]; then
+    echo -e "$errНеобходимые параметры не были переданы в роутер!"
 else
     ./shell/source/render.sh "$width" "$height" "$fps"
 fi
