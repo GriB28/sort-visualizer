@@ -9,7 +9,7 @@ err="\033[0;31m[!]${E} "
 commands=("help" "reset" "render" "generate" "sort")
 help=("--page <uint>[def. all]")
 reset=("--cmake <bool>[def. true]" "--venv <bool>[def. true]" "--temp <bool>[def. true]")
-render=("--time <uit>" "--width <uint>[def. 1920]" "--height <uint>[def. 1080]")
+render=("--fps <uit>" "--width <uint>[def. 1920]" "--height <uint>[def. 1080]")
 generate=("--name <string>" "--length <uint>")
 sort=("--input <string>" "--output <string>")
 
