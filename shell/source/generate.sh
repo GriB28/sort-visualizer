@@ -11,6 +11,5 @@ if [ -f "$script" ]; then
     python3 $script "$2" "$1"
     echo -e "$GЗавершено!$E"
 else
-    echo -e "$errНе найден файл генерации (generate.py)$E"
-    exit 1
+    echo -e "$errНе найден файл генерации ($script)$E"
 fi
