@@ -1,116 +1,171 @@
 #!/bin/bash
 
-NC='\033[0m'
-RED='\033[0;31m'
+E='\033[0m'
 GREEN='\033[0;32m'
 YELLOW='\033[0;33m'
 CYAN='\033[0;36m'
 GREY='\e[90m'
+err="\033[0;31m[!]${E} "
 
-algos=("bubble" "heap" "merge" "selection" "insertion" "quick")
 
-start_binary() {  # 1 -- sort_name; 2 -- way
-    input_file="./arrays/input_$1.txt"
-    log_file="$1.txt"
-
-    if [ -f "$2" ]; then
-        echo -e "\n$GREYОбработка: $1...$NC"
-        sleep 1
-        "$2" "$input_file" "$log_file"
+function help() {
+    echo -e "$GREY"
+    read -rp "Номер страницы (по умолчанию: все): " page
+    echo -e "$E"
+    if [ -z "$page" ]; then
+        ./shell/routers/help.sh
     else
-        echo -e "[!] $RED Не найден файл бинарника по пути: $2$NC"
-        echo -e " >  $RED Попробуйте запустить скрипт сборщика повторно либо собрать проект вручную$NC"
-        exit 1
+        ./shell/routers/help.sh --page "$page"
     fi
 }
 
+function main() {
+    echo -e "$CYAN"
+    read -rp "Размер массива для сортировки (количество элементов): " array_length
+    echo -e "$CYAN"
+    read -rp "Длина видео (в секундах): " video_length
+    echo -e "$CYAN"
+    read -rp "Название сортировки: " name
+    echo -e "$E"
 
-echo -e "Запускаю сборщик визуализатора сортировок..."
-echo -e "$CYANПодготавливаю проект к запуску...$NC\n"
+    ./shell/routers/main.sh --array_length "$array_length" --video_length "$video_length" --name "$name"
+}
 
-sleep 2
-
-if ! [ -d ".venv" ]; then
-    echo -e "$YELLOWНастраиваю виртуальное окружение, это займёт некоторое время...$NC"
-    python3 -m venv ./.venv
-    source ./.venv/bin/activate
-    echo -e "> $YELLOWУстанавливаю библиотеки$NC"
-    python3 -m pip install opencv-python numpy
-else
-    source ./.venv/bin/activate
-fi
-
-echo "Начинаю собирать проект С++"
-
-sleep 2
-
-if ! [ -d "cmake-build" ]; then
-    echo -e "$YELLOWНастраиваю CMake, это займёт некоторое время...$NC"
-    mkdir cmake-build
-    cmake -S . -B cmake-build
-fi
-
-cmake --build cmake-build
-echo -e "$GREENСборка завершена!$NC\n\n"
-
-echo -e "$YELLOWОжидаю параметры для генерации входных массивов:$NC\n"
-mkdir -p ./arrays
-
-read -rp ">>> Введите размер массива для сортировки: " length
-read -rp ">>> Введите название сортировки для расчёта или \`all\` для всех: " algorithm
-
-correct_algo_name=false
-for item in "${algos[@]}"; do
-    if [[ "$item" == "$algorithm" ]]; then
-        correct_algo_name=true
-        break
-    fi
-done
-if [ "$correct_algo_name" = false ] && [ "$algorithm" != "all" ]; then
-    echo "Фигню написал, делаю all!"
-    algorithm="all"
-fi
-
-if [ -f "generate.py" ]; then
-    python3 generate.py $length $algorithm
-else
-    echo -e "[!] $REDНе найден файл генерации (generate.py)$NC"
-    exit 1
-fi
-
-echo -e "$YELLOWЗапускаю сортировки!$NC"
-sleep 2
-
-way="./bin/sort_visualizer"
-
-if [ "$algorithm" == "all" ]; then
-    for algo in "${algos[@]}"; do
-        start_binary $algo $way
+function reset() {
+    cmake=-1
+    while [ $cmake -eq -1 ]; do
+        echo -e "$GREY"
+        read -rp "Сбросить настройки CMake? (y/n, по умолчанию 'y') " cmake
+        case $cmake in
+            y|Y)
+                cmake=true
+                ;;
+            n|N)
+                cmake=false
+                ;;
+            *)
+                echo -e "$errВведённое значение не может быть распознано"
+                cmake=-1
+                ;;
+        esac
     done
-else
-    start_binary $algorithm $way
-fi
 
-echo -e "\n\n\n$CYANНачинаю генерировать видео$NC"
-sleep 2
-if [ -f "test.py" ]; then
-    python3 test.py
-else
-    echo -e "[!] $REDНе найден файл test.py$NC"
-    exit 1
-fi
+    venv=-1
+    while [ $venv -eq -1 ]; do
+        echo -e "$GREY"
+        read -rp "Сбросить настройки Python VENV? (y/n, по умолчанию 'y') " venv
+        case $venv in
+            y|Y)
+                venv=true
+                ;;
+            n|N)
+                venv=false
+                ;;
+            *)
+                echo -e "$errВведённое значение не может быть распознано"
+                venv=-1
+                ;;
+        esac
+    done
 
-echo -e "\n\nНажмите ENTER, чтобы удалить временные файлы выйти из программы"
-read
+    temp=-1
+    while [ $temp -eq -1 ]; do
+        echo -e "$GREY"
+        read -rp "Очистить временные файлы? (y/n, по умолчанию 'y') " temp
+        case $temp in
+            y|Y)
+                temp=true
+                ;;
+            n|N)
+                temp=false
+                ;;
+            *)
+                echo -e "$errВведённое значение не может быть распознано"
+                temp=-1
+                ;;
+        esac
+    done
 
-echo -e "$YELLOWОчищаю временные файлы, логи и папки с массивами$NC"
-sleep 1
-rm -rf ./arrays
-for algo in "${algos[@]}"; do
-    rm -f "${algo}.txt"
+    echo -e "$E"
+
+    ./shell/routers/reset.sh --cmake $cmake --venv $venv --temp $temp
+}
+
+function generate() {
+    echo -e "$CYAN"
+    read -rp "Название сортировки: " name
+    echo -e "$CYAN"
+    read -rp "Размер массива для сортировки: " length
+    echo -e "$E"
+
+    ./shell/routers/generate.sh --name "$name" --length "$length"
+}
+
+function sort() {
+    echo -e "$CYAN"
+    read -rp "Файл с конфигурацией: " input
+    echo -e "$CYAN"
+    read -rp "Имя выходного файла: " output
+    echo -e "$E"
+
+    ./shell/routers/sort.sh --input "$input" --output "$output"
+}
+
+function render() {
+    echo -e "$CYAN"
+    read -rp "Файл с конфигурацией: " file
+    echo -e "$CYAN"
+    read -rp "Количество кадров в секунду: " fps
+
+    echo -e "$GREY"
+    read -rp "Горизонтальный размер видео (по умолчанию: 1920): " width
+    if [ -z "$width" ]; then
+        width=1920
+    fi
+
+    echo -e "$GREY"
+    read -rp "Вертикальный размер видео (по умолчанию: 1080): " height
+    if [ -z "$height" ]; then
+        height=1080
+    fi
+
+    echo -e "$E"
+
+    ./shell/routers/render.sh --file "$file" --fps "$fps" --width "$width" --height "$height"
+}
+
+
+while true; do
+    echo -e "\n$GREEN"
+    read -rp ">>> " command
+    case "$command" in
+        exit)
+            break
+            ;;
+        help)
+            help
+            ;;
+        main)
+            main
+            ;;
+        reset)
+            reset
+            ;;
+        generate)
+            generate
+            ;;
+        sort)
+            sort
+            ;;
+        render)
+            render
+            ;;
+        *)
+            echo -e "$errКоманда не распознана!"
+            ;;
+    esac
 done
 
-echo -e "> $GREENГотово!$NC"
-
-deactivate
+echo -e "$YELLOW    sort_visualizer, 2026$E"
+echo -e "$GREY    https://github.com/GriB28/sort_visualizer$E"
 exit
