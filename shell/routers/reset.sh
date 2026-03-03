@@ -1,32 +1,7 @@
 #!/bin/bash
 
-G='\e[90m'
-E='\033[0m'
-R='\033[0;31m'
-err="${R}[!]${E} "
+err="\033[0;31m[!]\033[0m "
 
-
-function do_reset() {  # 1 -- удалить (?) CMake; 2 -- удалить (?) venv; 3 -- удалить (?) временные файлы
-    need_rebuild=false
-    if $1; then
-        echo -e "$GСбрасываем конфигурацию CMake..."
-        rm -rf ./cmake-build
-        need_rebuild=true
-    fi
-    if $2; then
-        echo -e "$GСбрасываем конфигурацию Python VENV..."
-        rm -rf ./.venv
-        need_rebuild=true
-    fi
-    if $3; then
-        echo -e "$GОчищаем временные файлы..."
-        ./shell/clear.sh
-    fi
-
-    if $need_rebuild; then
-        ./shell/build.sh
-    fi
-}
 
 cmake=true
 venv=true
@@ -61,4 +36,4 @@ while [ "$#" -gt 1 ]; do
     shift
 done
 
-do_reset $cmake $venv $temp
+./shell/source/reset.sh $cmake $venv $temp
