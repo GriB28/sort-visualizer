@@ -1,3 +1,5 @@
+#!/bin/bash
+
 G='\e[90m'
 E='\033[0m'
 need_rebuild=false
