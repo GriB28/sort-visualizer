@@ -7,9 +7,8 @@ E='\033[0m'
 R='\033[0;31m'
 err="${R}[!]${E} "
 
-commands=("help" "build" "reset" "render")
+commands=("help" "reset" "render")
 help=("--page <uint>")
-build=("--cmake <bool>[def. true]" "--venv <bool>[def. true]")
 reset=("--cmake <bool>[def. true]" "--venv <bool>[def. true]" "--temp <bool>[def. true]")
 render=("--length <uit>" "--width <uint>" "--height <uint>")
 
