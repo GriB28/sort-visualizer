@@ -4,13 +4,14 @@ Y='\033[0;33m'
 G='\033[0;32m'
 C='\033[0;36m'
 E='\033[0m'
-R='\033[0;31m'
-err="${R}[!]${E} "
+err="\033[0;31m[!]${E} "
 
-commands=("help" "reset" "render")
-help=("--page <uint>")
+commands=("help" "reset" "render" "generate" "sort")
+help=("--page <uint>[def. all]")
 reset=("--cmake <bool>[def. true]" "--venv <bool>[def. true]" "--temp <bool>[def. true]")
-render=("--length <uit>" "--width <uint>" "--height <uint>")
+render=("--time <uit>" "--width <uint>[def. 1920]" "--height <uint>[def. 1080]")
+generate=("--name <string>" "--length <uint>")
+sort=("--input <string>" "--output <string>")
 
 
 function print() {  # 1 -- номер страницы для просмотра (0 = все)
