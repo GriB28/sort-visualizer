@@ -9,14 +9,14 @@ err="${R}[!]${E} "
 function do_render() {  # 1 -- video width; 2 -- video height; 3 -- video length
     fps=$((10000 / "$3"))  # needs tests
 
-    echo -e "$GЗапущен рендер видео с параметрами:"
-    echo -e "$G> WIDTH  = $1"
-    echo -e "$G> HEIGHT = $2"
-    echo -e "$G> FPS    = $fps"
+    echo -e "$GЗапущен рендер видео с параметрами:$E"
+    echo -e "$G> WIDTH  = $1$E"
+    echo -e "$G> HEIGHT = $2$E"
+    echo -e "$G> FPS    = $fps$E"
 
     python3 test.py "$1" "$2" "$fps"
 
-    echo -e "$GГотово!"
+    echo -e "$GГотово!$E"
 }
 
 length=0
