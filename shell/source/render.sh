@@ -14,7 +14,7 @@ if [ -f "$script" ]; then
     echo -e "$G> HEIGHT = $2$E"
     echo -e "$G> FPS    = $fps$E"
 
-    python3 test.py "$1" "$2" "$fps"
+    python3 $script "$1" "$2" "$fps"
 
     echo -e "$GГотово!$E"
 else
