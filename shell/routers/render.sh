@@ -45,7 +45,7 @@ while [ "$#" -gt 1 ]; do
     shift
 done
 
-if [ "$fps" -eq 0 ] || [ "$file" -eq "" ]; then
+if [ "$fps" -eq 0 ] || [ -z "$file" ]; then
     echo -e "$errНеобходимые параметры не были переданы в роутер!"
 else
     ./shell/source/render.sh "$width" "$height" "$fps"

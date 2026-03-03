@@ -55,7 +55,7 @@ while [ "$#" -gt 1 ]; do
     shift
 done
 
-if [ "$video_length" -eq 0 ] || [ "$array_length" -eq 0 ] || [ "$name" -eq "" ]; then
+if [ "$video_length" -eq 0 ] || [ "$array_length" -eq 0 ] || [ -z "$name" ]; then
     echo -e "$errНеобходимые параметры не были переданы в роутер!"
 else
     echo -e "$GПодготовка к генерации видео..."

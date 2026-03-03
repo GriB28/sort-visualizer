@@ -27,7 +27,7 @@ while [ "$#" -gt 1 ]; do
     shift
 done
 
-if [ "$name" -eq "" ] || [ "$length" -eq 0 ]; then
+if [ -z "$name" ] || [ "$length" -eq 0 ]; then
     echo -e "$errНеобходимые параметры не были переданы в роутер!"
 else
     ./shell/source/generate.sh "$name" "$length"

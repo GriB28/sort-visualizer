@@ -11,7 +11,7 @@ err="\033[0;31m[!]${E} "
 function help() {
     echo -e "$GREY"
     read -rp "Номер страницы (по умолчанию: все): " page
-    if [ "$page" -eq "" ]; then
+    if [ -z "$page" ]; then
         ./shell/routers/help.sh
     else
         ./shell/routers/help.sh --page "$page"
@@ -113,13 +113,13 @@ function render() {
 
     echo -e "$GREY"
     read -rp "Горизонтальный размер видео (по умолчанию: 1920): " width
-    if [ "$width" -eq "" ]; then
+    if [ -z "$width" ]; then
         width=1920
     fi
 
     echo -e "$GREY"
     read -rp "Вертикальный размер видео (по умолчанию: 1080): " height
-    if [ "$height" -eq "" ]; then
+    if [ -z "$height" ]; then
         height=1080
     fi
 
