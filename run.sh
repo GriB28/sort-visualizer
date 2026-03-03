@@ -9,7 +9,8 @@ err="\033[0;31m[!]${E} "
 
 
 function help() {
-    read -rp "$GREYНомер страницы (по умолчанию: все): " page
+    echo -e "$GREY"
+    read -rp "Номер страницы (по умолчанию: все): " page
     if [ "$page" -eq "" ]; then
         ./shell/routers/help.sh
     else
@@ -18,9 +19,12 @@ function help() {
 }
 
 function main() {
-    read -rp "$CYANРазмер массива для сортировки (количество элементов): " array_length
-    read -rp "$CYANДлина видео (в секундах): " video_length
-    read -rp "$CYANНазвание сортировки: " name
+    echo -e "$CYAN"
+    read -rp "Размер массива для сортировки (количество элементов): " array_length
+    echo -e "$CYAN"
+    read -rp "Длина видео (в секундах): " video_length
+    echo -e "$CYAN"
+    read -rp "Название сортировки: " name
 
     ./shell/routers/main --array_length "$array_length" --video_length "$video_length" --name "$name"
 }
@@ -28,7 +32,8 @@ function main() {
 function reset() {
     cmake=-1
     while [ $cmake -eq -1 ]; do
-        read -rp "$GREYСбросить настройки CMake? (y/n, по умолчанию 'y') " cmake
+        echo -e "$GREY"
+        read -rp "Сбросить настройки CMake? (y/n, по умолчанию 'y') " cmake
         case $cmake in
             y|Y)
                 cmake=true
@@ -45,7 +50,8 @@ function reset() {
 
     venv=-1
     while [ $venv -eq -1 ]; do
-        read -rp "$GREYСбросить настройки Python VENV? (y/n, по умолчанию 'y') " venv
+        echo -e "$GREY"
+        read -rp "Сбросить настройки Python VENV? (y/n, по умолчанию 'y') " venv
         case $venv in
             y|Y)
                 venv=true
@@ -62,7 +68,8 @@ function reset() {
 
     temp=-1
     while [ $temp -eq -1 ]; do
-        read -rp "$GREYОчистить временные файлы? (y/n, по умолчанию 'y') " temp
+        echo -e "$GREY"
+        read -rp "Очистить временные файлы? (y/n, по умолчанию 'y') " temp
         case $temp in
             y|Y)
                 temp=true
@@ -81,29 +88,37 @@ function reset() {
 }
 
 function generate() {
-    read -rp "$CYANНазвание сортировки: " name
-    read -rp "$CYANРазмер массива для сортировки: " length
+    echo -e "$CYAN"
+    read -rp "Название сортировки: " name
+    echo -e "$CYAN"
+    read -rp "Размер массива для сортировки: " length
 
     ./shell/routers/generate.sh --name "$name" --length "$length"
 }
 
 function sort() {
-    read -rp "$CYANФайл с конфигурацией: " input
-    read -rp "$CYANИмя выходного файла: " output
+    echo -e "$CYAN"
+    read -rp "Файл с конфигурацией: " input
+    echo -e "$CYAN"
+    read -rp "Имя выходного файла: " output
 
     ./shell/routers/sort.sh --input "$input" --output "$output"
 }
 
 function render() {
-    read -rp "$CYANФайл с конфигурацией: " file
-    read -rp "$CYANКоличество кадров в секунду: " fps
+    echo -e "$CYAN"
+    read -rp "Файл с конфигурацией: " file
+    echo -e "$CYAN"
+    read -rp "Количество кадров в секунду: " fps
 
-    read -rp "$GREYГоризонтальный размер видео (по умолчанию: 1920): " width
+    echo -e "$GREY"
+    read -rp "Горизонтальный размер видео (по умолчанию: 1920): " width
     if [ "$width" -eq "" ]; then
         width=1920
     fi
 
-    read -rp "$GREYВертикальный размер видео (по умолчанию: 1080): " height
+    echo -e "$GREY"
+    read -rp "Вертикальный размер видео (по умолчанию: 1080): " height
     if [ "$height" -eq "" ]; then
         height=1080
     fi
@@ -113,7 +128,8 @@ function render() {
 
 
 while true; do
-    read -rp "$GREEN>>> " command
+    echo -e "$GREEN"
+    read -rp ">>> " command
     case $command in
         exit)
             break
@@ -142,6 +158,6 @@ while true; do
     esac
 done
 
-echo -e "$YELLOW\sort_visualizer, 2026$E"
-echo -e "$GREY\https:://github.com/GriB28/sort_visualizer$E"
+echo -e "$YELLOW    sort_visualizer, 2026$E"
+echo -e "$GREY    https://github.com/GriB28/sort_visualizer$E"
 exit
