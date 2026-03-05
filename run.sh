@@ -32,8 +32,8 @@ function main() {
 }
 
 function reset() {
-    cmake=""
-    while [ -z $cmake ]; do
+    cmake="-1"
+    while [ "$cmake" = "-1" ]; do
         echo -e "$GREY"
         read -rp "Сбросить настройки CMake? (y/n, по умолчанию 'y') " cmake
         case $cmake in
@@ -45,13 +45,13 @@ function reset() {
                 ;;
             *)
                 echo -e "$errВведённое значение не может быть распознано"
-                cmake=-1
+                cmake="-1"
                 ;;
         esac
     done
 
-    venv=""
-    while [ -z $venv ]; do
+    venv="-1"
+    while [ "$venv" = "-1" ]; do
         echo -e "$GREY"
         read -rp "Сбросить настройки Python VENV? (y/n, по умолчанию 'y') " venv
         case $venv in
@@ -63,13 +63,13 @@ function reset() {
                 ;;
             *)
                 echo -e "$errВведённое значение не может быть распознано"
-                venv=-1
+                venv="-1"
                 ;;
         esac
     done
 
-    temp=""
-    while [ -z $temp ]; do
+    temp="-1"
+    while [ "$temp" = "-1" ]; do
         echo -e "$GREY"
         read -rp "Очистить временные файлы? (y/n, по умолчанию 'y') " temp
         case $temp in
@@ -81,14 +81,14 @@ function reset() {
                 ;;
             *)
                 echo -e "$errВведённое значение не может быть распознано"
-                temp=""
+                temp="-1"
                 ;;
         esac
     done
 
     echo -e "$E"
 
-    ./shell/routers/reset.sh --cmake $cmake --venv $venv --temp $temp
+    ./shell/routers/reset.sh --cmake "$cmake" --venv "$venv" --temp "$temp"
 }
 
 function generate() {
