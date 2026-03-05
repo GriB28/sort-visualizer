@@ -13,7 +13,7 @@ def sinpi(x):
     return math.sin(np.pi * x)
 
 with open(imagename, "w") as f:
-    if imagename == "bubble":
+    if imagename == "bubble.csv":
         for i in arr:
             f.write(f"{sinpi(i):.3f},")
     #later another images will be added
