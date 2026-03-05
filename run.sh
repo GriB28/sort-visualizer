@@ -32,12 +32,12 @@ function main() {
 }
 
 function reset() {
-    cmake=-1
-    while [ $cmake -eq -1 ]; do
+    cmake=""
+    while [ -z $cmake ]; do
         echo -e "$GREY"
         read -rp "Сбросить настройки CMake? (y/n, по умолчанию 'y') " cmake
         case $cmake in
-            y|Y)
+            y|Y|"")
                 cmake=true
                 ;;
             n|N)
@@ -50,12 +50,12 @@ function reset() {
         esac
     done
 
-    venv=-1
-    while [ $venv -eq -1 ]; do
+    venv=""
+    while [ -z $venv ]; do
         echo -e "$GREY"
         read -rp "Сбросить настройки Python VENV? (y/n, по умолчанию 'y') " venv
         case $venv in
-            y|Y)
+            y|Y|"")
                 venv=true
                 ;;
             n|N)
@@ -68,12 +68,12 @@ function reset() {
         esac
     done
 
-    temp=-1
-    while [ $temp -eq -1 ]; do
+    temp=""
+    while [ -z $temp ]; do
         echo -e "$GREY"
         read -rp "Очистить временные файлы? (y/n, по умолчанию 'y') " temp
         case $temp in
-            y|Y)
+            y|Y|"")
                 temp=true
                 ;;
             n|N)
@@ -81,7 +81,7 @@ function reset() {
                 ;;
             *)
                 echo -e "$errВведённое значение не может быть распознано"
-                temp=-1
+                temp=""
                 ;;
         esac
     done
@@ -135,12 +135,13 @@ function render() {
 }
 
 
-while true; do
+breaker=false
+while [ ! $breaker ]; do
     echo -e "\n$GREEN"
     read -rp ">>> " command
     case "$command" in
         exit)
-            break
+            breaker=true
             ;;
         help)
             help
