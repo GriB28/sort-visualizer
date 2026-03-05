@@ -1,6 +1,6 @@
 #!/bin/bash
 
-S='\e[90m[build]'
+S='\e[90m[build] '
 E='\033[0m'
 ok=true
 
