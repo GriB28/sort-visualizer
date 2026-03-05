@@ -144,7 +144,7 @@ echo -e "$YELLOW
 
 
 breaker=false
-while [ ! $breaker ]; do
+while ! $breaker; do
     echo -e "\n$GREEN"
     read -rp ">>> " command
     case "$command" in
