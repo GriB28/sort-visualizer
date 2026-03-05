@@ -1,6 +1,6 @@
 #!/bin/bash
 
-S='\e[90m\[clear\]'
+S='\e[90m[clear]'
 E='\033[0m'
 
 algorithms=("bubble" "heap" "merge" "selection" "insertion" "quick")
