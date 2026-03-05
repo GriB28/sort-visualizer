@@ -28,7 +28,7 @@ if ! [ -d "cmake-build" ]; then
 fi
 
 
-if [ $ok ]; then
+if $ok; then
     echo -e "$SНеобходимые компоненты уже установлены"
 else
     echo -e "$SВсё готово к использованию!"
