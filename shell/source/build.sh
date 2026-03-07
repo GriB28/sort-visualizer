@@ -1,6 +1,6 @@
 #!/bin/bash
 
-S='\e[90m\[build\]'
+S='\e[90m[build] '
 E='\033[0m'
 ok=true
 
@@ -28,7 +28,7 @@ if ! [ -d "cmake-build" ]; then
 fi
 
 
-if [ $ok ]; then
+if $ok; then
     echo -e "$SНеобходимые компоненты уже установлены"
 else
     echo -e "$SВсё готово к использованию!"

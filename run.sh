@@ -32,12 +32,12 @@ function main() {
 }
 
 function reset() {
-    cmake=-1
-    while [ $cmake -eq -1 ]; do
+    cmake="-1"
+    while [ "$cmake" = "-1" ]; do
         echo -e "$GREY"
         read -rp "Сбросить настройки CMake? (y/n, по умолчанию 'y') " cmake
         case $cmake in
-            y|Y)
+            y|Y|"")
                 cmake=true
                 ;;
             n|N)
@@ -45,17 +45,17 @@ function reset() {
                 ;;
             *)
                 echo -e "$errВведённое значение не может быть распознано"
-                cmake=-1
+                cmake="-1"
                 ;;
         esac
     done
 
-    venv=-1
-    while [ $venv -eq -1 ]; do
+    venv="-1"
+    while [ "$venv" = "-1" ]; do
         echo -e "$GREY"
         read -rp "Сбросить настройки Python VENV? (y/n, по умолчанию 'y') " venv
         case $venv in
-            y|Y)
+            y|Y|"")
                 venv=true
                 ;;
             n|N)
@@ -63,17 +63,17 @@ function reset() {
                 ;;
             *)
                 echo -e "$errВведённое значение не может быть распознано"
-                venv=-1
+                venv="-1"
                 ;;
         esac
     done
 
-    temp=-1
-    while [ $temp -eq -1 ]; do
+    temp="-1"
+    while [ "$temp" = "-1" ]; do
         echo -e "$GREY"
         read -rp "Очистить временные файлы? (y/n, по умолчанию 'y') " temp
         case $temp in
-            y|Y)
+            y|Y|"")
                 temp=true
                 ;;
             n|N)
@@ -81,14 +81,14 @@ function reset() {
                 ;;
             *)
                 echo -e "$errВведённое значение не может быть распознано"
-                temp=-1
+                temp="-1"
                 ;;
         esac
     done
 
     echo -e "$E"
 
-    ./shell/routers/reset.sh --cmake $cmake --venv $venv --temp $temp
+    ./shell/routers/reset.sh --cmake "$cmake" --venv "$venv" --temp "$temp"
 }
 
 function generate() {
@@ -134,13 +134,22 @@ function render() {
     ./shell/routers/render.sh --file "$file" --fps "$fps" --width "$width" --height "$height"
 }
 
+echo -e "$YELLOW
+ ____             _    __     ___                 _ _
+/ ___|  ___  _ __| |_  \\ \\   / (_)___ _   _  __ _| (_)_______ _ __
+\___ \\ / _ \\| '__| __|  \\ \\ / /| / __| | | |/ _\` | | |_  / _ \\ '__|
+ ___) | (_) | |  | |_    \\ V / | \\__ \\ |_| | (_| | | |/ /  __/ |
+|____/ \\___/|_|   \\__|    \\_/  |_|___/\\__,_|\\__,_|_|_/___\\___|_|
+\n$E"
 
-while true; do
+
+breaker=false
+while ! $breaker; do
     echo -e "\n$GREEN"
     read -rp ">>> " command
     case "$command" in
         exit)
-            break
+            breaker=true
             ;;
         help)
             help
