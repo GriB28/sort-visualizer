@@ -14,7 +14,9 @@ if [ -f "$script" ]; then
     echo -e "$G> FPS    = $3$E"
     echo -e "$G> FILE   = $4$E"
 
+    source ./.venv/bin/activate
     python3 $script "$1" "$2" "$3" "$4"
+    deactivate
 
     echo -e "$GГотово!$E"
 else
