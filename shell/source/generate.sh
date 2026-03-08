@@ -8,7 +8,10 @@ script="generate.py"
 
 
 if [ -f "$script" ]; then
+    source ./.venv/bin/activate
     python3 $script "$2" "$1"
+    deactivate
+
     echo -e "$GЗавершено!$E"
 else
     echo -e "$errНе найден файл генерации ($script)$E"

@@ -10,13 +10,14 @@ echo -e "$SПроизводим проверку пресетов...$E\n"
 if ! [ -d ".venv" ]; then
     ok=false
     echo -e "$SЛокальная конфигурация интерпретатора Python не найдена, производим установку...$E"
+
     echo -e "$S> настройка venv... (1/2)$E"
     python3 -m venv ./.venv > /dev/null
-    source ./.venv/bin/activate
+
     echo -e "$S> установка библиотек... (2/2)$E"
-    python3 -m pip install -r .req > /dev/null
-else
     source ./.venv/bin/activate
+    python3 -m pip install -r .req > /dev/null
+    deactivate
 fi
 
 
