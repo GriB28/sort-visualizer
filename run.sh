@@ -17,7 +17,7 @@ function check_packages() {
             ((ok++))
         fi
     done
-    if [ $ok -lt 4 ]; then
+    if [ $ok -lt ${#package_list[@]} ]; then
         echo -e "$errВ системе отсутствуют необходимые пакеты!"
         exit 1
     fi
