@@ -64,4 +64,5 @@ else
     ./shell/routers/generate.sh --name "$name" --length "$array_length"
     ./shell/routers/sort.sh --input "arrays/input_$name.txt" --output "arrays/output_$name.txt"
     ./shell/routers/render.sh --fps $fps --file "arrays/output_$name.txt" --width "$video_width" --height "$video_height"
+    ./shell/routers/compress.sh --input "videos/output_$name.mp4" --output "videos/output_$name.mp4"
 fi

@@ -7,8 +7,23 @@ CYAN='\033[0;36m'
 GREY='\e[90m'
 err="\033[0;31m[!]${E} "
 
+package_list=("python3" "g++" "cmake" "ffmpeg")
 
-function help() {
+
+function check_packages() {
+    ok=0
+    for pkg in "${package_list[@]}"; do
+        if command -v "$pkg" >/dev/null 2>&1; then
+            ((ok++))
+        fi
+    done
+    if [ $ok -lt ${#package_list[@]} ]; then
+        echo -e "$errВ системе отсутствуют необходимые пакеты!"
+        exit 1
+    fi
+}
+
+function help_() {
     echo -e "$GREY"
     read -rp "Номер страницы (по умолчанию: все): " page
     echo -e "$E"
@@ -134,6 +149,17 @@ function render() {
     ./shell/routers/render.sh --file "$file" --fps "$fps" --width "$width" --height "$height"
 }
 
+function compress() {
+    echo -e "$CYAN"
+    read -rp "Входной файл: " input_file
+    echo -e "$CYAN"
+    read -rp "Выходной файл: " output_file
+
+    echo -e "$E"
+
+    ./shell/routers/compress.sh --input "$input_file" --output "$output_file"
+}
+
 echo -e "$YELLOW
  ____             _    __     ___                 _ _
 / ___|  ___  _ __| |_  \\ \\   / (_)___ _   _  __ _| (_)_______ _ __
@@ -142,6 +168,7 @@ echo -e "$YELLOW
 |____/ \\___/|_|   \\__|    \\_/  |_|___/\\__,_|\\__,_|_|_/___\\___|_|
 \n$E"
 
+check_packages
 
 breaker=false
 while ! $breaker; do
@@ -151,8 +178,8 @@ while ! $breaker; do
         exit)
             breaker=true
             ;;
-        help)
-            help
+        help_)
+            help_
             ;;
         main)
             main
@@ -168,6 +195,9 @@ while ! $breaker; do
             ;;
         render)
             render
+            ;;
+        compress)
+            compress
             ;;
         *)
             echo -e "$errКоманда не распознана!"
