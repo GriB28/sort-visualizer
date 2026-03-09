@@ -7,6 +7,21 @@ CYAN='\033[0;36m'
 GREY='\e[90m'
 err="\033[0;31m[!]${E} "
 
+package_list=("python3" "g++" "cmake" "ffmpeg")
+
+
+function check_packages() {
+    ok=0
+    for pkg in "${package_list[@]}"; do
+        if command -v "$pkg" >/dev/null 2>&1; then
+            ((ok++))
+        fi
+    done
+    if [ $ok -lt 4 ]; then
+        echo -e "$errВ системе отсутствуют необходимые пакеты!"
+        exit 1
+    fi
+}
 
 function help() {
     echo -e "$GREY"
@@ -153,6 +168,7 @@ echo -e "$YELLOW
 |____/ \\___/|_|   \\__|    \\_/  |_|___/\\__,_|\\__,_|_|_/___\\___|_|
 \n$E"
 
+check_packages
 
 breaker=false
 while ! $breaker; do
@@ -180,7 +196,6 @@ while ! $breaker; do
         render)
             render
             ;;
-        *)
         compress)
             compress
             ;;
