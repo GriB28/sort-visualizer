@@ -1,6 +1,8 @@
 #!/bin/bash
 
-err="\033[0;31m[!]\033[0m "
+G='\e[90m'
+E='\033[0m'
+err="\033[0;31m[!]${E} "
 
 
 input=""
@@ -17,10 +19,9 @@ while [ "$#" -gt 1 ]; do
             ;;
         --output)
             if [ -f "$2" ]; then
-                output="$2"
-            else
-                echo -e "$errАргумент ключа output не может быть распознан!"
+                echo -e "$GВыходной файл с таким именем уже существует. Программа спросит разрешение на перезапись."
             fi
+            output="$2"
             shift
             ;;
     esac
@@ -31,7 +32,7 @@ if [ -z "$input" ] || [ -z "$output" ]; then
     echo -e "$errНеобходимые параметры не были переданы в роутер!"
 else
     if [ "$input" = "$output" ]; then
-        echo -e "$errПараметр input не может быть равен параметру output!"
+        echo -e "$GПараметр input не может быть равен параметру output!$E"
     else
         ffmpeg -i "$input" -filter:v "framerate=fps=60:interp_start=0:interp_end=0:scene=0" "$output"
     fi
