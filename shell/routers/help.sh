@@ -6,7 +6,7 @@ C='\033[0;36m'
 E='\033[0m'
 err="\033[0;31m[!]${E} "
 
-commands=("exit" "help" "reset" "render" "generate" "sort" "main")
+commands=("exit" "help" "reset" "render" "generate" "sort" "main" "compress")
 exit=()
 help=("--page <uint>[def. all]")
 reset=("--cmake <bool>[def. true]" "--venv <bool>[def. true]" "--temp <bool>[def. true]")
@@ -14,6 +14,7 @@ render=("--file <string>" "--fps <uit>" "--width <uint>[def. 1920]" "--height <u
 generate=("--name <string>" "--length <uint>")
 sort=("--input <string>" "--output <string>")
 main=("--name <string>" "--video_length <uint>" "--array_length <uint>")
+compress=("--input <string>" "--output <string>")
 
 
 function print() {  # 1 -- номер страницы для просмотра (0 = все)
