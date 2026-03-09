@@ -23,7 +23,7 @@ function check_packages() {
     fi
 }
 
-function help() {
+function help_() {
     echo -e "$GREY"
     read -rp "Номер страницы (по умолчанию: все): " page
     echo -e "$E"
@@ -178,8 +178,8 @@ while ! $breaker; do
         exit)
             breaker=true
             ;;
-        help)
-            help
+        help_)
+            help_
             ;;
         main)
             main
