@@ -30,5 +30,9 @@ done
 if [ -z "$input" ] || [ -z "$output" ]; then
     echo -e "$errНеобходимые параметры не были переданы в роутер!"
 else
-    ffmpeg -i "$input" -filter:v "framerate=fps=60:interp_start=0:interp_end=0:scene=0" "$output"
+    if [ "$input" = "$output" ]; then
+        echo -e "$errПараметр input не может быть равен параметру output!"
+    else
+        ffmpeg -i "$input" -filter:v "framerate=fps=60:interp_start=0:interp_end=0:scene=0" "$output"
+    fi
 fi
