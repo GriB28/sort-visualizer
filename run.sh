@@ -134,6 +134,17 @@ function render() {
     ./shell/routers/render.sh --file "$file" --fps "$fps" --width "$width" --height "$height"
 }
 
+function compress() {
+    echo -e "$CYAN"
+    read -rp "Входной файл: " input_file
+    echo -e "$CYAN"
+    read -rp "Выходной файл: " output_file
+
+    echo -e "$E"
+
+    ./shell/routers/compress.sh --input "$input_file" --output "$output_file"
+}
+
 echo -e "$YELLOW
  ____             _    __     ___                 _ _
 / ___|  ___  _ __| |_  \\ \\   / (_)___ _   _  __ _| (_)_______ _ __
@@ -168,6 +179,10 @@ while ! $breaker; do
             ;;
         render)
             render
+            ;;
+        *)
+        compress)
+            compress
             ;;
         *)
             echo -e "$errКоманда не распознана!"
