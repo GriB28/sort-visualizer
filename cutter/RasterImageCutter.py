@@ -6,6 +6,8 @@ from sys import argv
 imagename = 'rick.jpg'
 #array_size = int(argv[2])
 array_size = 240
+outputname = "anim.mp4"
+framerate = 600
 
 # Read image as grayscale
 img = cv2.imread(imagename, cv2.IMREAD_GRAYSCALE)
@@ -23,11 +25,16 @@ for x in range(0, width, stripe_width):
 
 for stripe in vertical_stripes:
     for y in range(0, height):
-        if np.sum(stripe[y, :] == 255) > stripe_width/2:
+        if np.sum(stripe[y, :] == 255) > stripe_width/2-3:
             stripe[y, :] = 255
         else:
             stripe[y, :] = 0
 
 reconstructed = np.hstack(vertical_stripes)
 
-cv2.imwrite('sliced.png', reconstructed)
+cv2.imwrite('slicedrick.png', reconstructed)
+
+fourcc = cv2.VideoWriter_fourcc(*'mp4v')
+video = cv2.VideoWriter(outputname, fourcc, framerate, (width, height))
+
+
