@@ -4,7 +4,7 @@ G='\e[90m'
 E='\033[0m'
 err="\033[0;31m[!]${E} "
 
-script="generate.py"
+script="generate_old.py"
 
 
 if [ -f "$script" ]; then
