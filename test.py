@@ -3,18 +3,18 @@ import numpy as np
 import os
 from sys import argv
 
-from numpy.ma.extras import hstack
-
 width = int(argv[1])
 height = int(argv[2])
 framerate = int(argv[3])
 source = argv[4]
 log = argv[5]
 algorithm_name = argv[6]
-if len(argv) > 7:
-    image_name = argv[7]
+
+image_render_flag = int(argv[7])  #  0 -- default;  1 -- vector;  2 -- raster
+if image_render_flag and len(argv) > 8:
+    image_path = argv[8]
 else:
-    image_name = None
+    image_path = None
 
 output_name = f'videos/output_{algorithm_name}.mp4'
 
@@ -22,7 +22,10 @@ output_name = f'videos/output_{algorithm_name}.mp4'
 def draw_rectangle(frame, index, value, color, array_size, max_val):
     gap = 10
     bar_width = (width - gap*2) / array_size
-    bar_height = int((value / max_val) * (height - gap*2))
+    if image_render_flag == 0:
+        bar_height = int((value / max_val) * (height - gap*2))
+    elif image_render_flag == 1:
+        bar_height = vector_heights_array[index]
     x = int(index * bar_width + gap)
     cv2.rectangle(frame, (x, height - gap), (x + int(bar_width), height - bar_height - gap), color, -1)
 
@@ -72,8 +75,8 @@ def run_visualization():
         arr = [int(x) for x in first_line.split()]
 
     image = None
-    if image_name:
-        image = cv2.imread(image_name)
+    if image_path:
+        image = cv2.imread(image_path)
         image = cv2.resize(image, (width, height))
 
     fourcc = cv2.VideoWriter_fourcc(*'mp4v')
@@ -93,7 +96,7 @@ def run_visualization():
                 if line == 's':
                     if a < len(arr) and b < len(arr):
                         arr[a], arr[b] = arr[b], arr[a]
-                        if image_name is not None:
+                        if image_path is not None:
                             draw_frame_image(video, arr, text, image)
                         else:
                             draw_frame(video, arr, text, True, a, b)
@@ -102,14 +105,14 @@ def run_visualization():
                     parts = line.split()
                     if len(parts) == 2:
                         a, b = int(parts[0]), int(parts[1])
-                        if image_name is not None:
+                        if image_path is not None:
                             draw_frame_image(video, arr, text, image)
                         else:
                             draw_frame(video, arr, text, True, a, b)
                         compares += 1
 
         for _ in range(framerate):
-            if image_name is not None:
+            if image_path is not None:
                 draw_frame_image(video, arr, text, image)
             else:
                 draw_frame(video, arr, text, False)
