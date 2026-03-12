@@ -92,7 +92,10 @@ def run_visualization():
             a, b = 0, 0
             swaps = 0
             compares = 0
-            for line in f:
+            lines = f.readlines()
+            total_length = len(lines)
+            counter = 0
+            for line in lines:
                 line = line.strip()
                 if not line:
                     continue
@@ -114,6 +117,9 @@ def run_visualization():
                         else:
                             draw_frame(video, arr, text, True, a, b)
                         compares += 1
+                counter += 1
+                print(f"{counter * 100 / total_length:.2f}%", end='\b\r')
+            print("100%")
 
         for _ in range(framerate):
             if image_path is not None:
