@@ -57,6 +57,7 @@ def draw_frame_image(video, arr, text, image):
     video.write(frame)
 
 
+
 def run_visualization():
     if not os.path.exists('videos'):
         os.makedirs('videos')
@@ -91,13 +92,19 @@ def run_visualization():
                 if line == 's':
                     if a < len(arr) and b < len(arr):
                         arr[a], arr[b] = arr[b], arr[a]
-                        draw_frame(video, arr, text, True, a, b)
+                        if image_name is not None:
+                            draw_frame_image(video, arr, text, image)
+                        else:
+                            draw_frame(video, arr, text, True, a, b)
                     swaps += 1
                 else:
                     parts = line.split()
                     if len(parts) == 2:
                         a, b = int(parts[0]), int(parts[1])
-                        draw_frame(video, arr, text, True, a, b)
+                        if image_name is not None:
+                            draw_frame_image(video, arr, text, image)
+                        else:
+                            draw_frame(video, arr, text, True, a, b)
                         compares += 1
 
         for _ in range(framerate):
