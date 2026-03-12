@@ -1,5 +1,5 @@
 #!/bin/bash
-# 1 -- video width; 2 -- video height; 3 -- video length; 4 -- file path
+# 1 -- video width; 2 -- video height; 3 -- video length; 4 -- source file path; 5 -- sort log file path
 
 G='\e[90m'
 E='\033[0m'
@@ -12,10 +12,11 @@ if [ -f "$script" ]; then
     echo -e "$G> WIDTH  = $1$E"
     echo -e "$G> HEIGHT = $2$E"
     echo -e "$G> FPS    = $3$E"
-    echo -e "$G> FILE   = $4$E"
+    echo -e "$G> SOURCE = $4$E"
+    echo -e "$G> SORT   = $5$E"
 
     source ./.venv/bin/activate
-    python3 $script "$1" "$2" "$3" "$4"
+    python3 $script "$1" "$2" "$3" "$4" "$5"
     deactivate
 
     echo -e "$GГотово!$E"

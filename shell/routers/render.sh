@@ -17,11 +17,19 @@ while [ "$#" -gt 1 ]; do
             fi
             shift
             ;;
-        --file)
+        --sort_file)
             if [ -f "$2" ]; then
-                file=$2
+                sort_file=$2
             else
-                echo -e "$errАргумент ключа file не может быть найден на диске!"
+                echo -e "$errАргумент ключа sort_file не может быть найден на диске!"
+            fi
+            shift
+            ;;
+        --source_file)
+            if [ -f "$2" ]; then
+                source_file=$2
+            else
+                echo -e "$errАргумент ключа source_file не может быть найден на диске!"
             fi
             shift
             ;;
@@ -48,5 +56,5 @@ done
 if [ "$fps" -eq 0 ] || [ -z "$file" ]; then
     echo -e "$errНеобходимые параметры не были переданы в роутер!"
 else
-    ./shell/source/render.sh "$width" "$height" "$fps"
+    ./shell/source/render.sh "$width" "$height" "$fps" "$source_file" "$sort_file"
 fi
