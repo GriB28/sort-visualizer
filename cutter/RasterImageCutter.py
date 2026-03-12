@@ -83,6 +83,16 @@ while not all(sorted_flags):
         frame = np.hstack(vertical_stripes)
         video.write(cv2.cvtColor(frame, cv2.COLOR_GRAY2BGR))
         print("write")
+def stripe_length(stripe):
+    counter = 0
+    for y in range(height):
+        if stripe[y, :].any:
+            counter +=1
+    return counter
+
+with open("rick.csv", "w") as f:
+    for i in range(len(vertical_stripes)):
+        f.write(f"{stripe_length(vertical_stripes[i])/height},")
 
 video.release()
 
