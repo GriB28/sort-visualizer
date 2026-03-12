@@ -43,7 +43,7 @@ def stripe_length(stripe):
 
 with open("../arrays/rick.csv", "w") as f:
     for i in range(len(vertical_stripes)):
-        f.write(f"{stripe_length(vertical_stripes[i])},")
+        f.write(f"{stripe_length(vertical_stripes[i])}\n")
 
 fourcc = cv2.VideoWriter_fourcc(*'mp4v')
 video = cv2.VideoWriter(outputname, fourcc, framerate, (width, height))
