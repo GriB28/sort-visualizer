@@ -7,7 +7,7 @@ imagename = 'rick.jpg'
 #array_size = int(argv[2])
 array_size = 240
 outputname = "anim.mp4"
-framerate = 600
+framerate = 60
 
 # Read image as grayscale
 img = cv2.imread(imagename, cv2.IMREAD_GRAYSCALE)
@@ -51,9 +51,8 @@ def swap(i, j, stripe):
         stripe[i, :] = stripe[j, :]
         stripe[j, :] = tmp
 def sort_cycles(stripe):
-    n = height
     swapped = False
-    for i in range(n - 1):
+    for i in reversed(range(height - 1)):
         if stripe[i, 1] == 255 and stripe[i+1, 1] == 0:
             stripe[i, :], stripe[i+1, :] = stripe[i+1, 1], stripe[i, 1]
             swapped = True
