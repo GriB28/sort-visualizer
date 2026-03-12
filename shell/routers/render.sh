@@ -71,5 +71,17 @@ done
 if [ "$fps" -eq 0 ] || [ -z "$sort_file" ] || [ -z "$source_file" ]; then
     echo -e "$errНеобходимые параметры не были переданы в роутер!"
 else
-    ./shell/source/render.sh "$width" "$height" "$fps" "$source_file" "$sort_file" "$name" "$image_file"
+    case "$image_file" in
+        "")
+            image_file=0
+            ;;
+        *.jpg)
+            image_mode=1
+            ;;
+        *.csv)
+            image_mode=2
+            ;;
+    esac
+
+    ./shell/source/render.sh "$width" "$height" "$fps" "$source_file" "$sort_file" "$name" "$image_mode" "$image_file"
 fi
