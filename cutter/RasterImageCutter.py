@@ -34,6 +34,17 @@ reconstructed = np.hstack(vertical_stripes)
 
 cv2.imwrite('slicedrick.png', reconstructed)
 
+def stripe_length(stripe):
+    counter = 0
+    for y in range(height):
+        if stripe[y, 1] == 255:
+            counter +=1
+    return counter/height
+
+with open("../arrays/rick.csv", "w") as f:
+    for i in range(len(vertical_stripes)):
+        f.write(f"{stripe_length(vertical_stripes[i])},")
+
 fourcc = cv2.VideoWriter_fourcc(*'mp4v')
 video = cv2.VideoWriter(outputname, fourcc, framerate, (width, height))
 
@@ -88,11 +99,11 @@ def stripe_length(stripe):
     for y in range(height):
         if stripe[y, :].any:
             counter +=1
-    return counter
+    return counter/height
 
 with open("rick.csv", "w") as f:
     for i in range(len(vertical_stripes)):
-        f.write(f"{stripe_length(vertical_stripes[i])/height},")
+        f.write(f"{stripe_length(vertical_stripes[i])},")
 
 video.release()
 
