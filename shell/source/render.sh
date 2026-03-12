@@ -14,9 +14,10 @@ if [ -f "$script" ]; then
     echo -e "$G> FPS    = $3$E"
     echo -e "$G> SOURCE = $4$E"
     echo -e "$G> SORT   = $5$E"
+    echo -e "$G> NAME   = $6$E"
 
     source ./.venv/bin/activate
-    python3 $script "$1" "$2" "$3" "$4" "$5"
+    python3 $script "$1" "$2" "$3" "$4" "$5" "$6"
     deactivate
 
     echo -e "$GГотово!$E"

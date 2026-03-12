@@ -8,8 +8,7 @@ height = int(argv[2])
 framerate = int(argv[3])
 source = argv[4]
 log = argv[5]
-
-algorithm_name = log[:log.rfind('.')]
+algorithm_name = argv[6]
 
 output_name = f'videos/output_{algorithm_name}.mp4'
 
