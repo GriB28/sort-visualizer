@@ -6,6 +6,7 @@ err="\033[0;31m[!]\033[0m "
 fps=0
 sort_file=""
 source_file=""
+image_file=""
 name="default"
 width=1920
 height=1080
@@ -32,6 +33,14 @@ while [ "$#" -gt 1 ]; do
                 source_file=$2
             else
                 echo -e "$errАргумент ключа source_file не может быть найден на диске!"
+            fi
+            shift
+            ;;
+        --image_file)
+            if [ -f "$2" ]; then
+                image_file=$2
+            else
+                echo -e "$errАргумент ключа image_file не может быть найден на диске!"
             fi
             shift
             ;;
@@ -62,5 +71,5 @@ done
 if [ "$fps" -eq 0 ] || [ -z "$sort_file" ] || [ -z "$source_file" ]; then
     echo -e "$errНеобходимые параметры не были переданы в роутер!"
 else
-    ./shell/source/render.sh "$width" "$height" "$fps" "$source_file" "$sort_file" "$name"
+    ./shell/source/render.sh "$width" "$height" "$fps" "$source_file" "$sort_file" "$name" "$image_file"
 fi

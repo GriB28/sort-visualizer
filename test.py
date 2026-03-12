@@ -16,6 +16,9 @@ if len(argv) > 7:
 else:
     image_name = None
 
+print(argv)
+print(image_name)
+
 
 output_name = f'videos/output_{algorithm_name}.mp4'
 
@@ -45,16 +48,20 @@ def draw_frame(video, arr, text, highlight=False, idx1=None, idx2=None):
     video.write(frame)
 
 def draw_frame_image(video, arr, text, image):
+    print(1)
     stripe_width = int(width / len(arr))
     vertical_stripes = []
     for x in range(0, width, stripe_width):
         stripe = image[:, x:x + stripe_width]  # slice columns x to x+stripe_width
         vertical_stripes.append(stripe)
-    vertical_stripes = [vertical_stripes[arr[i]] for i in range(len(arr))]
+    print(arr)
+    vertical_stripes = [vertical_stripes[arr[i] - 1] for i in range(len(arr))]
     frame = np.hstack(vertical_stripes)
     (text_width, text_height), baseline = cv2.getTextSize(text, cv2.FONT_HERSHEY_SIMPLEX, 0.7, 2)
     cv2.putText(frame, text, (0, text_height), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 255))
     video.write(frame)
+    cv2.imwrite('aboba.jpg', frame)
+    input()
 
 
 
