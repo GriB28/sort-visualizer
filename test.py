@@ -3,28 +3,38 @@ import numpy as np
 import os
 from sys import argv
 
-from numpy.ma.extras import hstack
-
 width = int(argv[1])
 height = int(argv[2])
 framerate = int(argv[3])
 source = argv[4]
 log = argv[5]
 algorithm_name = argv[6]
-if len(argv) > 7:
-    image_name = argv[7]
+
+image_path = None
+vector_heights_array = list()
+image_render_flag = int(argv[7])  #  0 -- default;  1 -- vector;  2 -- raster
+if len(argv) > 8:
+    if image_render_flag == 1:
+        with open(f"arrays/{algorithm_name}.csv") as heights_file:
+            vector_heights_array = list(map(float, heights_file.read().strip().split('\n')))
+    elif image_render_flag == 2:
+        image_path = argv[8]
 else:
-    image_name = None
+    image_render_flag = 0
 
 output_name = f'videos/output_{algorithm_name}.mp4'
 
 
 def draw_rectangle(frame, index, value, color, array_size, max_val):
-    gap = 10
-    bar_width = (width - gap*2) / array_size
-    bar_height = int((value / max_val) * (height - gap*2))
-    x = int(index * bar_width + gap)
-    cv2.rectangle(frame, (x, height - gap), (x + int(bar_width), height - bar_height - gap), color, -1)
+    bar_width = width / array_size
+    if image_render_flag == 0:
+        bar_height = int(value / max_val * height)
+    elif image_render_flag == 1:
+        bar_height = int(vector_heights_array[value - 1] * height)
+    else:
+        bar_height = 0
+    x = int(index * bar_width)
+    cv2.rectangle(frame, (x, height), (x + int(bar_width), height - bar_height), color, -1)
 
 def draw_frame(video, arr, text, highlight=False, idx1=None, idx2=None):
     frame = np.zeros((height, width, 3), dtype=np.uint8)
@@ -55,8 +65,6 @@ def draw_frame_image(video, arr, text, image):
     (text_width, text_height), baseline = cv2.getTextSize(text, cv2.FONT_HERSHEY_SIMPLEX, 0.7, 2)
     cv2.putText(frame, text, (0, text_height), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 255))
     video.write(frame)
-    cv2.imwrite('aboba.jpg', frame)
-
 
 
 def run_visualization():
@@ -72,8 +80,8 @@ def run_visualization():
         arr = [int(x) for x in first_line.split()]
 
     image = None
-    if image_name:
-        image = cv2.imread(image_name)
+    if image_path:
+        image = cv2.imread(image_path)
         image = cv2.resize(image, (width, height))
 
     fourcc = cv2.VideoWriter_fourcc(*'mp4v')
@@ -85,7 +93,10 @@ def run_visualization():
             a, b = 0, 0
             swaps = 0
             compares = 0
-            for line in f:
+            lines = f.readlines()
+            total_length = len(lines)
+            counter = 0
+            for line in lines:
                 line = line.strip()
                 if not line:
                     continue
@@ -93,7 +104,7 @@ def run_visualization():
                 if line == 's':
                     if a < len(arr) and b < len(arr):
                         arr[a], arr[b] = arr[b], arr[a]
-                        if image_name is not None:
+                        if image_path is not None:
                             draw_frame_image(video, arr, text, image)
                         else:
                             draw_frame(video, arr, text, True, a, b)
@@ -102,14 +113,17 @@ def run_visualization():
                     parts = line.split()
                     if len(parts) == 2:
                         a, b = int(parts[0]), int(parts[1])
-                        if image_name is not None:
+                        if image_path is not None:
                             draw_frame_image(video, arr, text, image)
                         else:
                             draw_frame(video, arr, text, True, a, b)
                         compares += 1
+                counter += 1
+                print(f"{counter * 100 / total_length:.2f}%", end='\b\r')
+            print("100%")
 
         for _ in range(framerate):
-            if image_name is not None:
+            if image_path is not None:
                 draw_frame_image(video, arr, text, image)
             else:
                 draw_frame(video, arr, text, False)

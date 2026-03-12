@@ -10,10 +10,10 @@ commands=("exit" "help" "reset" "render" "generate" "sort" "main" "compress")
 exit=()
 help=("--page <uint>[def. all]")
 reset=("--cmake <bool>[def. true]" "--venv <bool>[def. true]" "--temp <bool>[def. true]")
-render=("--file <string>" "--fps <uit>" "--width <uint>[def. 1920]" "--height <uint>[def. 1080]")
+render=("--fps <uit>" "--source_file <string>" "--sort_file <string>" "--image_file <string>" "--width <uint>[def. 1920]" "--height <uint>[def. 1080]" "--name <string>[def. 'default']")
 generate=("--name <string>" "--length <uint>")
 sort=("--input <string>" "--output <string>")
-main=("--name <string>" "--video_length <uint>" "--array_length <uint>")
+main=("--name <string>" "--video_length <uint>" "--array_length <uint>" "--video_width <uint>[def. 1920]" "--video_height <uint>[def. 1080]")
 compress=("--input <string>" "--output <string>")
 
 
