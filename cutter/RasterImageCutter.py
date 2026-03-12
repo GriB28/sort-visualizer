@@ -101,10 +101,4 @@ def stripe_length(stripe):
             counter +=1
     return counter/height
 
-with open("rick.csv", "w") as f:
-    for i in range(len(vertical_stripes)):
-        f.write(f"{stripe_length(vertical_stripes[i])},")
-
 video.release()
-
-
