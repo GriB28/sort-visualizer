@@ -65,7 +65,7 @@ else
 
     lines=$(wc -l < "arrays/output_$name.txt")
     fps=$(("$lines" / "$video_length"))
-    ./shell/routers/render.sh --name "$name" --source_file "arrays/input_$name.txt" --sort_file "arrays/output_$name.txt" --fps "$fps" --width "$video_width" --height "$video_height"
+    ./shell/routers/render.sh --name "$name" --source_file "arrays/input_$name.txt" --sort_file "arrays/output_$name.txt" --fps "$fps" --width "$video_width" --height "$video_height" --image_file "images/$name.jpg"
 
     ./shell/routers/compress.sh --input "videos/output_$name.mp4" --output "videos/compressed_$name.mp4"
 fi
