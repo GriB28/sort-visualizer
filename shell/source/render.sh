@@ -18,9 +18,10 @@ if [ -f "$script" ]; then
     echo -e "$G> SORT   = $5$E"
     echo -e "$G> NAME   = $6$E"
     echo -e "$G> IM_FLG = $7$E"
+    echo -e "$G> IM_PTH = $8$E"
 
     source ./.venv/bin/activate
-    if [ $# -gt 7 ] && [ -z "$8" ]; then
+    if [ -z "$8" ]; then
         python3 $script "$1" "$2" "$3" "$4" "$5" "$6" 0
     else
         python3 $script "$1" "$2" "$3" "$4" "$5" "$6" "$7" "$8"

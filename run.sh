@@ -41,9 +41,18 @@ function main() {
     read -rp "Длина видео (в секундах): " video_length
     echo -e "$CYAN"
     read -rp "Название сортировки: " name
+    echo -e "$GREY"
+    read -rp "Путь к файлу изображения/csv (по умолчанию: none): " image_path
+    if [ -z "$name" ]; then
+        image_path=""
+    fi
     echo -e "$E"
 
-    ./shell/routers/main.sh --array_length "$array_length" --video_length "$video_length" --name "$name"
+    if [ -z "$image_path" ]; then
+        ./shell/routers/main.sh --array_length "$array_length" --video_length "$video_length" --name "$name"
+    else
+        ./shell/routers/main.sh --array_length "$array_length" --video_length "$video_length" --name "$name" --image_path "$image_path"
+    fi
 }
 
 function reset() {
@@ -149,10 +158,19 @@ function render() {
     if [ -z "$name" ]; then
         name="default"
     fi
+    echo -e "$GREY"
+    read -rp "Путь к файлу изображения/csv (по умолчанию: none): " image_file
+    if [ -z "$name" ]; then
+        image_file=""
+    fi
 
     echo -e "$E"
 
-    ./shell/routers/render.sh --source_file "$source_file" --sort_file "$sort_file" --fps "$fps" --width "$width" --height "$height" --name "$name"
+    if [ -z "$image_file" ]; then
+        ./shell/routers/render.sh --source_file "$source_file" --sort_file "$sort_file" --fps "$fps" --width "$width" --height "$height" --name "$name"
+    else
+        ./shell/routers/render.sh --source_file "$source_file" --sort_file "$sort_file" --fps "$fps" --width "$width" --height "$height" --name "$name" --image_file "$image_file"
+    fi
 }
 
 function compress() {
@@ -184,7 +202,7 @@ while ! $breaker; do
         exit)
             breaker=true
             ;;
-        help_)
+        help)
             help_
             ;;
         main)

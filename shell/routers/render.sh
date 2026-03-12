@@ -75,10 +75,10 @@ else
         "")
             image_file=0
             ;;
-        *.jpg)
+        *.csv)
             image_mode=1
             ;;
-        *.csv)
+        *.jpg)
             image_mode=2
             ;;
     esac

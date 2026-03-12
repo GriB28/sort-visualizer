@@ -7,6 +7,7 @@ err="\033[0;31m[!]\033[0m "
 video_length=0
 array_length=0
 name=""
+image_path=""
 video_width=1920
 video_height=1080
 while [ "$#" -gt 1 ]; do
@@ -43,6 +44,14 @@ while [ "$#" -gt 1 ]; do
             fi
             shift
             ;;
+        --image_path)
+            if [[ -f "$2" ]]; then
+                image_path="$2"
+            else
+                echo -e "$errАргумент ключа image_path не может быть распознан!"
+            fi
+            shift
+            ;;
         --name)
             if [[ $2 =~ ^(bubble|heap|merge|selection|insertion|quick)$ ]]; then
                 name="$2"
@@ -65,7 +74,11 @@ else
 
     lines=$(wc -l < "arrays/output_$name.txt")
     fps=$(("$lines" / "$video_length"))
-    ./shell/routers/render.sh --name "$name" --source_file "arrays/input_$name.txt" --sort_file "arrays/output_$name.txt" --fps "$fps" --width "$video_width" --height "$video_height" --image_file "images/$name.jpg"
+    if [ -z "$image_path" ]; then
+        ./shell/routers/render.sh --name "$name" --source_file "arrays/input_$name.txt" --sort_file "arrays/output_$name.txt" --fps "$fps" --width "$video_width" --height "$video_height"
+    else
+        ./shell/routers/render.sh --name "$name" --source_file "arrays/input_$name.txt" --sort_file "arrays/output_$name.txt" --fps "$fps" --width "$video_width" --height "$video_height" --image_file "$image_path"
+    fi
 
     ./shell/routers/compress.sh --input "videos/output_$name.mp4" --output "videos/compressed_$name.mp4"
 fi

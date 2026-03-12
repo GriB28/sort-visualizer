@@ -13,11 +13,10 @@ algorithm_name = argv[6]
 image_path = None
 vector_heights_array = list()
 image_render_flag = int(argv[7])  #  0 -- default;  1 -- vector;  2 -- raster
-if len(argv) > 9:
+if len(argv) > 8:
     if image_render_flag == 1:
         with open(f"arrays/{algorithm_name}.csv") as heights_file:
-            vector_heights_array = list(map(float, heights_file.read().strip().split(',')))
-        vector_heights_array = []
+            vector_heights_array = list(map(float, heights_file.read().strip().split('\n')))
     elif image_render_flag == 2:
         image_path = argv[8]
 else:
@@ -31,7 +30,9 @@ def draw_rectangle(frame, index, value, color, array_size, max_val):
     if image_render_flag == 0:
         bar_height = int(value / max_val * height)
     elif image_render_flag == 1:
-        bar_height = int(vector_heights_array[index] * height)
+        bar_height = int(vector_heights_array[value - 1] * height)
+    else:
+        bar_height = 0
     x = int(index * bar_width)
     cv2.rectangle(frame, (x, height), (x + int(bar_width), height - bar_height), color, -1)
 
