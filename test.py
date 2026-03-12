@@ -6,8 +6,12 @@ from sys import argv
 width = int(argv[1])
 height = int(argv[2])
 framerate = int(argv[3])
+source = argv[4]
+log = argv[5]
 
-algos = ['bubble', 'heap', 'merge', 'selection', 'insertion', 'quick']
+algorithm_name = log[:log.rfind('.')]
+
+output_name = f'videos/output_{algorithm_name}.mp4'
 
 def draw_rectangle(frame, index, value, color, array_size, max_val):
     gap = 10
@@ -38,53 +42,48 @@ def run_visualization():
     if not os.path.exists('videos'):
         os.makedirs('videos')
 
-    for algo in algos:
-        current_input = f'./arrays/input_{algo}.txt'
-        current_log = f'{algo}.txt'
-        output_name = f'videos/output_{algo}.mp4'
+    if not os.path.exists(source) or not os.path.exists(log):
+        print(f"Skipping: files missing")
+        exit()
 
-        if not os.path.exists(current_input) or not os.path.exists(current_log):
-            print(f"Skipping {algo}: files missing")
-            continue
+    with open(source, 'r') as f:
+        first_line = f.readline().strip()
+        arr = [int(x) for x in first_line.split()]
 
-        with open(current_input, 'r') as f:
-            first_line = f.readline().strip()
-            arr = [int(x) for x in first_line.split()]
+    fourcc = cv2.VideoWriter_fourcc(*'mp4v')
+    video = cv2.VideoWriter(output_name, fourcc, framerate, (width, height))
 
-        fourcc = cv2.VideoWriter_fourcc(*'mp4v')
-        video = cv2.VideoWriter(output_name, fourcc, framerate, (width, height))
+    print(f"Visualisation started with {len(arr)} elements...")
+    try:
+        with open(log, 'r') as f:
+            a, b = 0, 0
+            swaps = 0
+            compares = 0
+            for line in f:
+                line = line.strip()
+                if not line:
+                    continue
+                text = f"{algorithm_name} sort with {len(arr)} elements, swaps:{swaps}, compares:{compares}"
+                if line == 's':
+                    if a < len(arr) and b < len(arr):
+                        arr[a], arr[b] = arr[b], arr[a]
+                        draw_frame(video, arr, text, True, a, b)
+                    swaps += 1
+                else:
+                    parts = line.split()
+                    if len(parts) == 2:
+                        a, b = int(parts[0]), int(parts[1])
+                        draw_frame(video, arr, text, True, a, b)
+                        compares += 1
 
-        print(f"Visualisation started for {algo}, with {len(arr)} elements...")
-        try:
-            with open(current_log, 'r') as f:
-                a, b = 0, 0
-                swaps = 0
-                compares = 0
-                for line in f:
-                    line = line.strip()
-                    if not line:
-                        continue
-                    text = f"{algo} sort with {len(arr)} elements, swaps:{swaps}, compares:{compares}"
-                    if line == 's':
-                        if a < len(arr) and b < len(arr):
-                            arr[a], arr[b] = arr[b], arr[a]
-                            draw_frame(video, arr, text, True, a, b)
-                        swaps += 1
-                    else:
-                        parts = line.split()
-                        if len(parts) == 2:
-                            a, b = int(parts[0]), int(parts[1])
-                            draw_frame(video, arr, text, True, a, b)
-                            compares += 1
+        for _ in range(framerate):
+            draw_frame(video, arr, text, False)
 
-            for _ in range(framerate):
-                draw_frame(video, arr, text, False)
-
-            print(f"Finished {algo}! Result saved in {output_name}")
-        except Exception as e:
-            print(f"Error in {algo}: {e}")
-        finally:
-            video.release()
+        print(f"Finished {algorithm_name}! Result saved in {output_name}")
+    except Exception as e:
+        print(f"Error: {e}")
+    finally:
+        video.release()
 
 if __name__ == "__main__":
     run_visualization()
