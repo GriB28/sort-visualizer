@@ -139,16 +139,20 @@ function render() {
     if [ -z "$width" ]; then
         width=1920
     fi
-
     echo -e "$GREY"
     read -rp "Вертикальный размер видео (по умолчанию: 1080): " height
     if [ -z "$height" ]; then
         height=1080
     fi
+    echo -e "$GREY"
+    read -rp "Имя сортировки для отображения (по умолчанию: default): " name
+    if [ -z "$name" ]; then
+        name="default"
+    fi
 
     echo -e "$E"
 
-    ./shell/routers/render.sh --source_file "$source_file" --sort_file "$sort_file" --fps "$fps" --width "$width" --height "$height"
+    ./shell/routers/render.sh --source_file "$source_file" --sort_file "$sort_file" --fps "$fps" --width "$width" --height "$height" --name "$name"
 }
 
 function compress() {
