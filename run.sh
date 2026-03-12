@@ -128,7 +128,9 @@ function sort() {
 
 function render() {
     echo -e "$CYAN"
-    read -rp "Файл с конфигурацией: " file
+    read -rp "Файл с конфигурацией генератора: " source_file
+    echo -e "$CYAN"
+    read -rp "Файл с логом сортировщика: " sort_file
     echo -e "$CYAN"
     read -rp "Количество кадров в секунду: " fps
 
@@ -146,7 +148,7 @@ function render() {
 
     echo -e "$E"
 
-    ./shell/routers/render.sh --file "$file" --fps "$fps" --width "$width" --height "$height"
+    ./shell/routers/render.sh --source_file "$source_file" --sort_file "$sort_file" --fps "$fps" --width "$width" --height "$height"
 }
 
 function compress() {
