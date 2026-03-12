@@ -12,7 +12,11 @@ algorithm_name = argv[6]
 
 image_path = None
 vector_heights_array = list()
-image_render_flag = int(argv[7])  #  0 -- default;  1 -- vector;  2 -- raster
+argv_7 = argv[7]
+if argv_7 == '':
+    image_render_flag = 0
+else:
+    image_render_flag = int(argv[7])  #  0 -- default;  1 -- vector;  2 -- raster
 if len(argv) > 8:
     if image_render_flag == 1:
         with open(f"arrays/{algorithm_name}.csv") as heights_file:
