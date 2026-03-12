@@ -59,10 +59,13 @@ if [ "$video_length" -eq 0 ] || [ "$array_length" -eq 0 ] || [ -z "$name" ]; the
     echo -e "$errНеобходимые параметры не были переданы в роутер!"
 else
     echo -e "$GПодготовка к генерации видео..."
-    fps=$(("$array_length" * 100 / "$video_length"))  # needs tests
 
     ./shell/routers/generate.sh --name "$name" --length "$array_length"
     ./shell/routers/sort.sh --input "arrays/input_$name.txt" --output "arrays/output_$name.txt"
-    ./shell/routers/render.sh --fps $fps --file "arrays/output_$name.txt" --width "$video_width" --height "$video_height"
-    ./shell/routers/compress.sh --input "videos/output_$name.mp4" --output "videos/output_$name.mp4"
+
+    lines=$(wc -l < "arrays/output_$name.txt")
+    fps=$(("$lines" / "$video_length"))
+    ./shell/routers/render.sh --name "$name" --source_file "arrays/input_$name.txt" --sort_file "arrays/output_$name.txt" --fps "$fps" --width "$video_width" --height "$video_height"
+
+    ./shell/routers/compress.sh --input "videos/output_$name.mp4" --output "videos/compressed_$name.mp4"
 fi

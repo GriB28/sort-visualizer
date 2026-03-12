@@ -128,7 +128,9 @@ function sort() {
 
 function render() {
     echo -e "$CYAN"
-    read -rp "Файл с конфигурацией: " file
+    read -rp "Файл с конфигурацией генератора: " source_file
+    echo -e "$CYAN"
+    read -rp "Файл с логом сортировщика: " sort_file
     echo -e "$CYAN"
     read -rp "Количество кадров в секунду: " fps
 
@@ -137,16 +139,20 @@ function render() {
     if [ -z "$width" ]; then
         width=1920
     fi
-
     echo -e "$GREY"
     read -rp "Вертикальный размер видео (по умолчанию: 1080): " height
     if [ -z "$height" ]; then
         height=1080
     fi
+    echo -e "$GREY"
+    read -rp "Имя сортировки для отображения (по умолчанию: default): " name
+    if [ -z "$name" ]; then
+        name="default"
+    fi
 
     echo -e "$E"
 
-    ./shell/routers/render.sh --file "$file" --fps "$fps" --width "$width" --height "$height"
+    ./shell/routers/render.sh --source_file "$source_file" --sort_file "$sort_file" --fps "$fps" --width "$width" --height "$height" --name "$name"
 }
 
 function compress() {
