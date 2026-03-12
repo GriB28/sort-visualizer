@@ -4,7 +4,8 @@ err="\033[0;31m[!]\033[0m "
 
 
 fps=0
-file=""
+sort_file=""
+source_file=""
 width=1920
 height=1080
 while [ "$#" -gt 1 ]; do
@@ -53,7 +54,7 @@ while [ "$#" -gt 1 ]; do
     shift
 done
 
-if [ "$fps" -eq 0 ] || [ -z "$file" ]; then
+if [ "$fps" -eq 0 ] || [ -z "$sort_file" ] || [ -z "$source_file" ]; then
     echo -e "$errНеобходимые параметры не были переданы в роутер!"
 else
     ./shell/source/render.sh "$width" "$height" "$fps" "$source_file" "$sort_file"
