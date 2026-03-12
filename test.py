@@ -10,24 +10,30 @@ source = argv[4]
 log = argv[5]
 algorithm_name = argv[6]
 
+image_path = None
+vector_heights_array = list()
 image_render_flag = int(argv[7])  #  0 -- default;  1 -- vector;  2 -- raster
-if image_render_flag and len(argv) > 8:
-    image_path = argv[8]
+if len(argv) > 9:
+    if image_render_flag == 1:
+        with open(f"arrays/{algorithm_name}.csv") as heights_file:
+            vector_heights_array = list(map(float, heights_file.read().strip().split(',')))
+        vector_heights_array = []
+    elif image_render_flag == 2:
+        image_path = argv[8]
 else:
-    image_path = None
+    image_render_flag = 0
 
 output_name = f'videos/output_{algorithm_name}.mp4'
 
 
 def draw_rectangle(frame, index, value, color, array_size, max_val):
-    gap = 10
-    bar_width = (width - gap*2) / array_size
+    bar_width = width / array_size
     if image_render_flag == 0:
-        bar_height = int((value / max_val) * (height - gap*2))
+        bar_height = int(value / max_val * height)
     elif image_render_flag == 1:
-        bar_height = vector_heights_array[index]
-    x = int(index * bar_width + gap)
-    cv2.rectangle(frame, (x, height - gap), (x + int(bar_width), height - bar_height - gap), color, -1)
+        bar_height = int(vector_heights_array[index] * height)
+    x = int(index * bar_width)
+    cv2.rectangle(frame, (x, height), (x + int(bar_width), height - bar_height), color, -1)
 
 def draw_frame(video, arr, text, highlight=False, idx1=None, idx2=None):
     frame = np.zeros((height, width, 3), dtype=np.uint8)
@@ -58,8 +64,6 @@ def draw_frame_image(video, arr, text, image):
     (text_width, text_height), baseline = cv2.getTextSize(text, cv2.FONT_HERSHEY_SIMPLEX, 0.7, 2)
     cv2.putText(frame, text, (0, text_height), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 255))
     video.write(frame)
-    cv2.imwrite('aboba.jpg', frame)
-
 
 
 def run_visualization():
