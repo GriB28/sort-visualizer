@@ -18,7 +18,11 @@ if [ -f "$script" ]; then
     echo -e "$G> IMAGE  = $7$E"
 
     source ./.venv/bin/activate
-    python3 $script "$1" "$2" "$3" "$4" "$5" "$6" "$7"
+    if [ -z "$7" ]; then
+        python3 $script "$1" "$2" "$3" "$4" "$5" "$6"
+    else
+        python3 $script "$1" "$2" "$3" "$4" "$5" "$6" "$7"
+    fi
     deactivate
 
     echo -e "$GГотово!$E"

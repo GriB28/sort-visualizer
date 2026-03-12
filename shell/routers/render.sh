@@ -68,7 +68,7 @@ while [ "$#" -gt 1 ]; do
     shift
 done
 
-if [ "$fps" -eq 0 ] || [ -z "$sort_file" ] || [ -z "$source_file" ] || [ -z "$image_file" ]; then
+if [ "$fps" -eq 0 ] || [ -z "$sort_file" ] || [ -z "$source_file" ]; then
     echo -e "$errНеобходимые параметры не были переданы в роутер!"
 else
     ./shell/source/render.sh "$width" "$height" "$fps" "$source_file" "$sort_file" "$name" "$image_file"
