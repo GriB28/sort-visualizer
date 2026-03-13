@@ -78,7 +78,7 @@ else
         *.csv)
             image_mode=1
             ;;
-        *.jpg)
+        *.jpg|*.png)
             image_mode=2
             ;;
     esac
