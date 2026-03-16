@@ -7,6 +7,8 @@
 
 <br><br>
 
+Смотрите виидео с результатом нашей работы на [`YouTube`](https://youtu.be/2OBKCt-7zeo)!
+
 ### ℹ️ Описание функционала
 
 <img src="/.readme/3.webp" width=80 align="left" style="float: left; margin-right: 8px;" alt="Main menu commands">
